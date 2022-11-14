@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -12,15 +13,21 @@
     "@types/react-dom": "^18.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-scripts": "5.0.1",
+    "redux": "^4.2.0",
+    "redux-saga": "^1.2.1",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-scripts start",
+    "start:teacher": "cross-env REACT_APP_BUILD_TARGET=TEACHER react-scripts start",
+    "start:student": "cross-env REACT_APP_BUILD_TARGET=STUDENT react-scripts start",
+    "build": "react-scripts build",
+    "build:teacher": "cross-env REACT_APP_BUILD_TARGET=TEACHER BUILD_PATH='./build_teacher' react-scripts build",
+    "build:student": "cross-env REACT_APP_BUILD_TARGET=STUDENT BUILD_PATH='./build_student' react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
