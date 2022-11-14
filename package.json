@@ -21,10 +21,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-scripts start",
+    "start:teacher": "cross-env REACT_APP_BUILD_TARGET=TEACHER react-scripts start",
+    "start:student": "cross-env REACT_APP_BUILD_TARGET=STUDENT react-scripts start",
+    "build": "react-scripts build",
+    "build:teacher": "cross-env REACT_APP_BUILD_TARGET=TEACHER BUILD_PATH='./build_teacher' react-scripts build",
+    "build:student": "cross-env REACT_APP_BUILD_TARGET=STUDENT BUILD_PATH='./build_student' react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
