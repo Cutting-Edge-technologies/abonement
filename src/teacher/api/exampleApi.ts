@@ -4,9 +4,11 @@ export interface IExampleDomainType {
   count: number;
 }
 
-export const exampleApiCall = async (): Promise<IExampleDomainType> => {
+export const defaultExampleMessage = 'I am example api responce';
+
+export const exampleApiCall = async (count: number, message: string = defaultExampleMessage): Promise<IExampleDomainType> => {
   return {
-    count: 42,
-    message: 'I am example api responce',
+    count,
+    message,
   }
 };
