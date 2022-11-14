@@ -6,7 +6,7 @@ import makeSagaMiddleware from 'redux-saga';
 
 const tooLongInMs = 3000;
 
-export const asyncDispatch = <RootState extends commonState>(store: Store<RootState>, action: Action) => {
+export const asyncDispatch = <RootState extends commonState>(store: Store<RootState>, action: Action, dispatch: Dispatch) => {
   const actionType = action.type;
 
   const promiseToDispachAction = new Promise((resolve, reject) => {
@@ -33,7 +33,8 @@ export const asyncDispatch = <RootState extends commonState>(store: Store<RootSt
     });
   });
 
-  store.dispatch(action);
+  // store.dispatch(action);
+  dispatch(action);
   return promiseToDispachAction;
 };
 
@@ -62,7 +63,7 @@ export const makeStoreCreator = <State extends commonState>(reducer: Reducer<Sta
     return {
       ...store,
       dispatch: wrappedDispatch,
-      asyncDispatch: (action: Action) => asyncDispatch(store, action),
+      asyncDispatch: (action: Action) => asyncDispatch(store, action, wrappedDispatch),
       getActionHistory: () => actionHistory,
     };
   };
