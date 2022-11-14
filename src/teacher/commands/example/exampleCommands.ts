@@ -1,5 +1,7 @@
-import { call } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { createCommand } from "../../../common/utilities/createCommand";
+import { exampleApiCall, IExampleDomainType } from "../../api/exampleApi";
+import { exampleSlice } from "../../store/example";
 
 export const exampleCommand = createCommand<string>(
   'exampleCommand',
@@ -8,9 +10,17 @@ export const exampleCommand = createCommand<string>(
   },
 );
 
-export const exampleCommand2 = createCommand<number>(
-  'exampleCommand2',
+export const exampleApiCommand = createCommand<number>(
+  'exampleApiCommand',
   function*({ payload: count }) {
-    yield call(console.info, count);
+    const dataFromApiCall: IExampleDomainType = yield call(exampleApiCall, count)
+    yield put(exampleSlice.actions.setExample(dataFromApiCall));
+  }
+);
+
+export const exampleResetCommand = createCommand<void>(
+  'exampleResetCommand',
+  function*() {
+    yield put(exampleSlice.actions.resetExample());
   }
 );
