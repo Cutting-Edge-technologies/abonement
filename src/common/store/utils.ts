@@ -54,6 +54,7 @@ export const makeStoreCreator = <State extends commonState>(reducer: Reducer<Sta
   
     const actionHistory: Action[] = [];
   
+    // this could be improved using saga monitor
     const wrappedDispatch: Dispatch<AnyAction> = (action: Action) => {
       actionHistory.push(action);
       store.dispatch(action);
