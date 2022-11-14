@@ -9,8 +9,8 @@ function* watchExample() {
   yield all(effects);
 }
 
-export const rootSaga = function*() {
+export const teacherRootSaga = function*() {
   yield all([
-    fork(watchExample)
+    fork(watchExample),
   ]);
 };
