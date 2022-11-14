@@ -1,27 +1,11 @@
-import { Store } from "redux";
+import { makeStoreCreator } from "../../common/store/utils";
 import { teacherRootReducer } from "./rootReducer";
-import makeSagaMiddleware from 'redux-saga';
-import { configureStore } from "@reduxjs/toolkit";
 import { teacherRootSaga } from "../commands";
 
 export type rootState = ReturnType<typeof teacherRootReducer>;
 
-export const makeANewStore = (): Store<rootState> => {
-  const sagaMiddleware = makeSagaMiddleware();
-  
-  const store = configureStore({
-    reducer: teacherRootReducer,
-    middleware: [
-      sagaMiddleware,
-    ],
-    devTools: process.env.NODE_ENV !== 'production',
-  });
+const teacherStoreCreator = makeStoreCreator(teacherRootReducer, teacherRootSaga);
 
-  sagaMiddleware.run(teacherRootSaga);
-
-  return store;
-};
-
-const teacherStore = makeANewStore();
+const teacherStore = teacherStoreCreator();
 
 export default teacherStore;
