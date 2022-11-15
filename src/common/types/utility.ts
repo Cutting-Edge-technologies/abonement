@@ -1,5 +1,7 @@
 import React from "react";
 import { Action, Store } from "redux";
+import { rootTeacherState } from "../../teacher/store";
+import { commonState } from "../store/commonReducer";
 
 export type id = string;
 export type commandName = string;
@@ -10,3 +12,8 @@ export interface ExtendedStore<State> extends Store<State> {
   getActionHistory: () => Action<any>[];
   getActionHistoryRepresentation: () => string;
 }
+
+export type GenericSelector<State, Result> = (state: State) => Result;
+export type ArgumentSelector<Selector> = (...args: any[]) => Selector;
+export type CommonSelector<Result> = GenericSelector<commonState, Result>;
+export type TeacherSelector<Result> = GenericSelector<rootTeacherState, Result>;
