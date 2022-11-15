@@ -2,11 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Action, AnyAction, Dispatch, Reducer, Store } from "redux";
 import { ExtendedStore } from "../types/utility";
 import { commonState } from "./commonReducer";
+import { StoreSagaMonitor } from "./sagaMonitor";
 import makeSagaMiddleware from 'redux-saga';
 
 const tooLongInMs = 3000;
 
-export const asyncDispatch = <RootState extends commonState>(store: Store<RootState>, action: Action, dispatch: Dispatch) => {
+export const asyncDispatch = <RootState extends commonState>(store: Store<RootState>, action: Action) => {
   const actionType = action.type;
 
   const promiseToDispachAction = new Promise((resolve, reject) => {
@@ -33,14 +34,15 @@ export const asyncDispatch = <RootState extends commonState>(store: Store<RootSt
     });
   });
 
-  // store.dispatch(action);
-  dispatch(action);
+  store.dispatch(action);
   return promiseToDispachAction;
 };
 
 export const makeStoreCreator = <State extends commonState>(reducer: Reducer<State>, rootSaga: () => Generator<any>) => {
   const makeANewStore = (): ExtendedStore<State> => {
-    const sagaMiddleware = makeSagaMiddleware();
+    const actionHistory: any[] = [];
+    const sagaMonitor = new StoreSagaMonitor(actionHistory);
+    const sagaMiddleware = makeSagaMiddleware({sagaMonitor});
     
     const store = configureStore({
       reducer,
@@ -52,20 +54,11 @@ export const makeStoreCreator = <State extends commonState>(reducer: Reducer<Sta
   
     sagaMiddleware.run(rootSaga);
   
-    const actionHistory: Action[] = [];
-  
-    // this could be improved using saga monitor
-    const wrappedDispatch: Dispatch<AnyAction> = (action: Action) => {
-      actionHistory.push(action);
-      store.dispatch(action);
-      return action as any;
-    }
-  
     return {
       ...store,
-      dispatch: wrappedDispatch,
-      asyncDispatch: (action: Action) => asyncDispatch(store, action, wrappedDispatch),
-      getActionHistory: () => actionHistory,
+      asyncDispatch: (action: Action) => asyncDispatch(store, action),
+      getActionHistory: () => [...actionHistory],
+      getActionHistoryRepresentation: () => JSON.stringify(actionHistory, undefined, 2),
     };
   };
 
