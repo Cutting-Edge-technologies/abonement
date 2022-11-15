@@ -8,4 +8,5 @@ export type HOC = React.FC<{}>;
 export interface ExtendedStore<State> extends Store<State> {
   asyncDispatch: (action: Action) => Promise<unknown>;
   getActionHistory: () => Action<any>[];
+  getActionHistoryRepresentation: () => string;
 }
