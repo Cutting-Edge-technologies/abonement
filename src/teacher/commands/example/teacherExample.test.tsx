@@ -30,8 +30,7 @@ describe('from teacher example chapter', () => {
     expect(exampleAfter.count).toBe(newCount);
     expect(exampleAfter.message).toBe(defaultExampleMessage);
 
-    const history = teacherStore.getActionHistory();
-    console.info(history);
+    console.info(teacherStore.getActionHistoryRepresentation());
   });
 
   test('it calls example api command and and then resets the state', async () => {
@@ -44,6 +43,6 @@ describe('from teacher example chapter', () => {
     await teacherStore.asyncDispatch(exampleResetCommand.action());
 
     expect(teacherStore.getState().example.count).toBe(0);
-    console.info(teacherStore.getActionHistory());
+    console.info(teacherStore.getActionHistoryRepresentation());
   })
 });
