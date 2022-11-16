@@ -3,7 +3,6 @@ import { Action, Store } from "redux";
 import { rootTeacherState } from "../../teacher/store";
 import { commonState } from "../store/commonReducer";
 
-export type id = string;
 export type commandName = string;
 
 export type HOC = React.FC<{}>;

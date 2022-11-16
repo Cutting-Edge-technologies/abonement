@@ -1,85 +1,78 @@
+export type id = string;
 
+export interface IHaveId {
+  id: id;
+};
 
-export interface User {
-    name: string
-    lastName: string
-    avatar: string
+export interface ITakeTime {
+  timeStart: number;
+  durationMin: number;
 }
 
-export interface Teacher extends User {
-    description: string
-    subjects: Subject
-    abonements: Abonement
+export interface IUser extends IHaveId {
+  firstName: string;
+  lastName: string;
+  avatar: string;
 }
 
-export interface Student extends User {}
-
-
-
-export interface Abonement {
-    subject: Subject
-    type: typeAbonement
-    limitTime ? : number
-    limitLessons ? : number
-    price: number
+export interface ITeacher extends IUser {
+  description: string;
+  subjects: id[];
+  abonementOffers: id[];
 }
 
-export interface TeacherAbonement extends Abonement {}
+export interface IStudent extends IUser {}
 
-export interface StudentAbonement extends Abonement {
-    dateBeginning: number
-    validity: boolean
+export interface IAbonement extends IHaveId {
+  subjects: id[];
+  type: abonementType;
+  limitTime?: number;
+  limitLessons?: number;
+  price: number;
 }
 
-export interface Subject {
-description: string
-schedule: Schedule
-lessons: Lesson
+export interface IAbonementOffer extends IAbonement {}
 
+export interface IAbonementConsumable extends IAbonement {
+  dateStart: Date;
+  lessonsLeft: number;
 }
 
-export interface Schedule {
-    rule: Rule
+export interface ISubject extends IHaveId {
+  description: string;
+  rules: id[];
 }
 
-export interface Rule {
-    periodicity: Periodicity
-    periodicityRule: PeriodicityRule
+export interface IPeriodicity {
+  periodicityType: PeriodicityType;
+  periodicityRule: number[];
 }
 
-export interface Lesson {
-    data: number
-    time: number
-    participants: Abonement
-    status: LessonStatus
+export interface IRule extends IHaveId, ITakeTime {
+  periodicity: IPeriodicity;
 }
 
-
-
-export enum typeAbonement {
-    limited,
-    unlimited
+export interface ILesson extends IHaveId, ITakeTime {
+  date: Date;
+  participants: id[];
+  status: LessonStatus;
 }
 
-export enum PeriodicityRule {
-    weekDay,
-    monthDay,
-    yearDay,
-    manualDate
+export enum abonementType {
+  limited,
+  unlimited
 }
 
-export enum Periodicity {
-    weekly,
-    monthly,
-    annually,
-    manualDate    
+export enum PeriodicityType {
+  weekly,
+  manualDate    
 }
 
 export enum LessonStatus {
-    schedule,
-    commingSoon,
-    process,
-    finished,
-    done,
-    canceled
+  scheduled,
+  commingSoon,
+  inProcess,
+  finished,
+  done,
+  canceled
 }
