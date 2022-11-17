@@ -26,8 +26,8 @@ export interface IStudent extends IUser {}
 export interface IAbonement extends IHaveId {
   subjects: id[];
   type: abonementType;
-  limitTime?: number;
-  limitLessons?: number;
+  limitTime: number;
+  limitLessons: number;
   price: number;
 }
 
