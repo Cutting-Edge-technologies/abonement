@@ -17,12 +17,15 @@ const createStore = () => {
 
 
 describe('editing slice creator tests', () => {
+
   test('if reducer returns a right state', () => {
     const store = createStore();
     const initialState = store.getState();
     console.warn(initialState);
-    expect(true).toBeTruthy();
-  });
+    expect(initialState.data.message).toBe('piece');
+    expect(initialState.data.b).toBe(42);
+  })
+
   test('a data state could be changed', () => {
     const store = createStore();
     store.dispatch(slice.actions.setEditingResource({
@@ -33,6 +36,7 @@ describe('editing slice creator tests', () => {
     expect(state.data.a).toBe(77);
     expect(state.data.b).toBe(77);
   });
+
   test('fields could be changed', () => {
     const store = createStore();
     store.dispatch(slice.actions.startEditingField('x'));
@@ -46,4 +50,5 @@ describe('editing slice creator tests', () => {
     expect(state2.fieldsEditing.x).toBe(false);
     expect(state2.fieldsEditing.y).toBe(false);
   });
+
 });
