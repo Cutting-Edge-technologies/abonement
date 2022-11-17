@@ -3,9 +3,8 @@ import { errorSlice } from "../../common/store/errorSlice";
 import { loadingSlice } from "../../common/store/loadingSlice";
 import { teacherDomainViewSlice } from "./domainView";
 import { exampleSlice } from "./example";
-import * as resourceSlices from './teacherExternalResources';
-
-const { externalLessonsSlice, externalSubjectsSlice, externalTeachersSlice, externalUsersSlice } = resourceSlices;
+import { externalLessonsSlice, externalSubjectsSlice, externalTeachersSlice, externalUsersSlice } from './teacherExternalResources';
+import { editableAbonementOfferSlice, editableRuleSlice, editableSubjectSlice, editableTeacherSlice } from './teacherEditables';
 
 export const teacherRootReducer = combineReducers({
   loading: loadingSlice.reducer,
@@ -16,4 +15,8 @@ export const teacherRootReducer = combineReducers({
   externalSubjects: externalSubjectsSlice.reducer,
   externalTeachers: externalTeachersSlice.reducer,
   externalUsers: externalUsersSlice.reducer,
+  editableAbonementOffer: editableAbonementOfferSlice.reducer,
+  editableRule: editableRuleSlice.reducer,
+  editableSubject: editableSubjectSlice.reducer,
+  editableTeacher: editableTeacherSlice.reducer,
 });
