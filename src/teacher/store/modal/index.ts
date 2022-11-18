@@ -40,6 +40,9 @@ interface ITeacherModalState {
   lessonView: LessonView;
 
   isLessonAddParticipantModalOpen: boolean;
+
+  teacherDescriptionShowMore: boolean;
+  subjectDescriptionShowMore: boolean;
 }
 
 const teacherModalInitialState: ITeacherModalState = {
@@ -51,6 +54,8 @@ const teacherModalInitialState: ITeacherModalState = {
   isLessonAddParticipantModalOpen: false,
   isNewRuleModalOpen: false,
   ruleModalMode: ModalMode.halfHeight,
+  teacherDescriptionShowMore: false,
+  subjectDescriptionShowMore: false,
 };
 
 export const teacherModalSlice = createSlice({
