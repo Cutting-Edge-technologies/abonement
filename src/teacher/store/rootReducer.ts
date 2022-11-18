@@ -5,6 +5,7 @@ import { teacherDomainViewSlice } from "./domainView";
 import { exampleSlice } from "./example";
 import { externalLessonsSlice, externalSubjectsSlice, externalTeachersSlice, externalUsersSlice } from './teacherExternalResources';
 import { editableAbonementOfferSlice, editableRuleSlice, editableSubjectSlice, editableTeacherSlice } from './teacherEditables';
+import { teacherModalSlice } from "./modal";
 
 export const teacherRootReducer = combineReducers({
   loading: loadingSlice.reducer,
@@ -19,4 +20,5 @@ export const teacherRootReducer = combineReducers({
   editableRule: editableRuleSlice.reducer,
   editableSubject: editableSubjectSlice.reducer,
   editableTeacher: editableTeacherSlice.reducer,
+  modal: teacherModalSlice.reducer,
 });
