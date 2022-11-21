@@ -107,20 +107,6 @@ export const teacherShowMore = createCommand<void>(
   }
 );
 
-export const startChangeSubjectDescription = createCommand<void>(
-  'startChangeSubjectDescription',
-  function*() {
-    yield call(console.log,'startChangeSubjectDescription');
-  }
-);	
-
-export const confirmChangeSubjectDescription = createCommand<void>(
-  'confirmChangeSubjectDescription',
-  function*() {
-    yield call(console.log,'confirmChangeSubjectDescription');
-  }
-);
-
 export const startEditingRule	= createCommand<id>(
   'startEditingRule',
   function*({payload: ruleId}) {
