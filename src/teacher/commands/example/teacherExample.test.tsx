@@ -1,4 +1,4 @@
-import { defaultExampleMessage } from '../../api/exampleApi';
+import { defaultExampleMessage } from '../../api/example/exampleApi';
 import { teacherStoreCreator } from '../../store';
 import { exampleApiCommand, exampleResetCommand } from './exampleCommands';
 

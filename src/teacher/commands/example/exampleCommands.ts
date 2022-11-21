@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { createCommand } from "../../../common/utilities/createCommand";
-import { exampleApiCall, IExampleDomainType } from "../../api/exampleApi";
+import { exampleApiCall, IExampleDomainType } from "../../api/example/exampleApi";
 import { exampleSlice } from "../../store/example";
 
 export const exampleCommand = createCommand<string>(
