@@ -15,6 +15,7 @@ export const exampleApiCommand = createCommand<number>(
   function*({ payload: count }) {
     const dataFromApiCall: IExampleDomainType = yield call(exampleApiCall, count)
     yield put(exampleSlice.actions.setExample(dataFromApiCall));
+    yield call(console.info, dataFromApiCall);
   }
 );
 
