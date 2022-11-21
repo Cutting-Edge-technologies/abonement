@@ -44,37 +44,37 @@ export const addStudentToLesson	= createCommand<id>(
   }
 );
 
-export const sendAnotherNotification	= createCommand<id>(
+export const sendAnotherNotification = createCommand<id>(
   'sendAnotherNotification',
   function*({payload: studentId}) {
     yield call(console.log,'sendAnotherNotification', studentId);
   }
 );
 
-export const requestStatusChange		= createCommand<id>(
+export const requestStatusChange = createCommand<id>(
   'requestStatusChange',
   function*({payload: studentId}) {
     yield call(console.log,'requestStatusChange', studentId);
   }
 );
 
-export const changeAddParticipantSearch		= createCommand<string>(
+export const changeAddParticipantSearch	= createCommand<string>(
   'changeAddParticipantSearch',
   function*({payload: participantSearch}) {
     yield call(console.log,'requestStatusChange', participantSearch);
   }
 );
 
-export const confirmAddParticipantSearch = createCommand<void>(
-  'confirmAddParticipantSearch',
+export const searchParticipantToAdd = createCommand<void>(
+  'searchParticipantToAdd',
   function*() {
-    yield call(console.log,'confirmAddParticipantSearch');
+    yield call(console.log,'searchParticipantToAdd');
   }
 );
 
-export const startTeacerApp = createCommand<void>(
-  'startTeacerApp',
+export const startTeacherApp = createCommand<void>(
+  'startTeacherApp',
   function*() {
-    yield call(console.log,'startTeacerApp');
+    yield call(console.log,'startTeacherApp');
   }
 );
