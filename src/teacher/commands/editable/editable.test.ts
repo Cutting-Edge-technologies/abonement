@@ -1,7 +1,7 @@
-import {changeAbonementLimitLessons, changeAbonementPrice} from "./editable";
+import {changeAbonementLimitLessons, changeAbonementPrice, changeAbonementType} from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { TeacherSelector } from "../../../common/types/utility";
-import { IAbonementOffer } from "../../../common/types/domain";
+import { abonementType, IAbonementOffer } from "../../../common/types/domain";
 import { editingFields, IEditingResourceState } from "../../../common/store/editingEntitySlice";
 
 const selectAbonementOffer: TeacherSelector<IEditingResourceState<IAbonementOffer>> = (state) => state.editableAbonementOffer;
@@ -9,6 +9,7 @@ const selectAbonementOfferData: TeacherSelector<IAbonementOffer> = (state) => se
 const selectAbonementOfferEditingFields: TeacherSelector<editingFields> = (state) => selectAbonementOffer(state).fieldsEditing;
 const selectAbonementOfferLimitLessons: TeacherSelector<number> = (state) => selectAbonementOfferData(state).limitLessons; 
 const selectAbonementOfferPrice: TeacherSelector<number> = (state) => selectAbonementOfferData(state).price; 
+const selectAbonementOfferAbonementType: TeacherSelector<abonementType> = (state) => selectAbonementOfferData(state).type; 
 
 
 describe('Teacher Editable AbonementsOffer Commands', () => {
@@ -31,6 +32,16 @@ describe('Teacher Editable AbonementsOffer Commands', () => {
     await teacherStore.asyncDispatch(changeAbonementPrice.action(newPrice));
     const changedState = teacherStore.getState();
     expect(selectAbonementOfferPrice(changedState)).toBe(newPrice);
+  });
+
+  test('change Abonement Type test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectAbonementOfferAbonementType(initialState)).toBe(abonementType.limited);
+    const newAbonementType = abonementType.unlimited;
+    await teacherStore.asyncDispatch(changeAbonementType.action(newAbonementType));
+    const changedState = teacherStore.getState();
+    expect(selectAbonementOfferAbonementType(changedState)).toBe(newAbonementType);
   });
 });
 
