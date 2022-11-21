@@ -5,10 +5,9 @@ import { HocDecorator } from '../TeacherStateDecorator';
 describe('Test Example HOC', () => {
   test('it checks that defaults are shown in HOC', async () => {
     const HocStoryToRender = HocDecorator(() => <ExampleTeacher />);
-    render(HocStoryToRender);
-    const message = await screen.findAllByText(/message is/);
-    console.log(message[0]);
-    console.log(message[0].innerHTML)
+    const { container } = await render(HocStoryToRender);
+    const messageElement = container.querySelector('.message');
+    console.log(messageElement?.innerHTML);
 
     expect(true).toBeTruthy();
   })
