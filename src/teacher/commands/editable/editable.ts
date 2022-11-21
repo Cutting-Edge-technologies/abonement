@@ -7,7 +7,7 @@ export const startChangeSubjectName = createCommand<void>(
   function*() {
     yield call(console.log,'startChangeSubjectName');
   }
-);	
+); 
   
 export const changeSubjectName = createCommand<string>(
   'changeSubjectName',
@@ -21,14 +21,14 @@ export const confirmChangeSubjectName = createCommand<void>(
   function*() {
     yield call(console.log,'confirmChangeSubjectName');
   }
-);	
+); 
 
 export const startChangeTeacherName = createCommand<void>(
   'startChangeTeacherName',
   function*() {
     yield call(console.log,'startChangeTeacherName');
   }
-);	
+); 
 
 export const changeTeacherName = createCommand<string>(
   'changeTeacherName',
@@ -42,7 +42,7 @@ export const confirmChangeTeacherName = createCommand<void>(
   function*() {
     yield call(console.log,'confirmChangeTeacherName');
   }
-);	
+); 
 
 export const startChangeTeacherDescription = createCommand<void>(
   'startChangeTeacherDescription',
@@ -65,21 +65,21 @@ export const confirmChangeTeacherDescription = createCommand<void>(
   }
 );
 
-export const changeAbonementType	= createCommand<abonementType>(
+export const changeAbonementType = createCommand<abonementType>(
   'changeAbonementType',
   function*({payload: abonementType}) {
     yield call(console.log,'deleteAbonementSubjects', abonementType);
   }
 );
-	
-export const changeAbonementLimitLessons	= createCommand<number>(
+ 
+export const changeAbonementLimitLessons = createCommand<number>(
   'changeAbonementLimitLessons',
   function*({payload: caunt}) {
     yield call(console.log,'changeAbonementLimitLessons', caunt);
   }
 );
-	
-export const changeAbonementPrice	= createCommand<number>(
+ 
+export const changeAbonementPrice = createCommand<number>(
   'changeAbonementPrice',
   function*({payload: price}) {
     yield call(console.log,'changeAbonementPrice', price);
@@ -93,49 +93,49 @@ export const changeSubjectDescription = createCommand<string>(
   }
 );
 
-export const changeRulePeriodicityType	= createCommand<PeriodicityType>(
+export const changeRulePeriodicityType = createCommand<PeriodicityType>(
   'changeRulePeriodicityType',
   function*({payload: periodicityType}) {
     yield call(console.log,'changeRulePeriodicityType', periodicityType);
   }
 );
 
-export const toggleRuleWeekDay	= createCommand<number>(
+export const toggleRuleWeekDay = createCommand<number>(
   'toggleRuleWeekDay',
   function*({payload: weekDay}) {
     yield call(console.log,'toggleRuleWeekDay', weekDay);
   }
-);	
- 	
-export const changeRuleStartTime	= createCommand<Date>(
+); 
+  
+export const changeRuleStartTime = createCommand<Date>(
   'changeRuleStartTime',
   function*({payload: startTime}) {
     yield call(console.log,'changeRuleStartTime', startTime);
   }
 );
 
-export const changeRuleDuration	= createCommand<number>(
+export const changeRuleDuration = createCommand<number>(
   'changeRuleDuration',
   function*({payload: durationMin}) {
     yield call(console.log,'changeRuleDuration', durationMin);
   }
 );
 
-export const changeRuleMonthDay	= createCommand<Date>(
+export const changeRuleMonthDay = createCommand<Date>(
   'changeRuleMonthDay',
   function*({payload: monthDay}) {
     yield call(console.log,'changeRuleMonthDay', monthDay);
   }
 );
 
-export const changeAbonementSubjects	= createCommand<id[]>(
+export const changeAbonementSubjects = createCommand<id[]>(
   'changeAbonementSubjects',
   function*({payload: subjectsIdArray}) {
     yield call(console.log,'changeAbonementSubjects', subjectsIdArray);
   }
 );
 
-export const deleteAbonementSubject	= createCommand<id>(
+export const deleteAbonementSubject = createCommand<id>(
   'deleteAbonementSubject',
   function*({payload: subjectId}) {
     yield call(console.log,'deleteAbonementSubject', subjectId);
@@ -147,7 +147,7 @@ export const startChangeSubjectDescription = createCommand<void>(
   function*() {
     yield call(console.log,'startChangeSubjectDescription');
   }
-);	
+); 
 
 export const confirmChangeSubjectDescription = createCommand<void>(
   'confirmChangeSubjectDescription',
