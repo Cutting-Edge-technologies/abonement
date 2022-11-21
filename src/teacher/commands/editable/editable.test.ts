@@ -1,7 +1,12 @@
-import {changeAbonementLimitLessons, changeAbonementPrice, changeAbonementType} from "./editable";
+import {
+  changeAbonementLimitLessons,
+  changeAbonementPrice,
+  changeAbonementType,
+  changeAbonementSubjects
+} from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { TeacherSelector } from "../../../common/types/utility";
-import { abonementType, IAbonementOffer } from "../../../common/types/domain";
+import { abonementType, IAbonementOffer, id, ISubject } from "../../../common/types/domain";
 import { editingFields, IEditingResourceState } from "../../../common/store/editingEntitySlice";
 
 const selectAbonementOffer: TeacherSelector<IEditingResourceState<IAbonementOffer>> = (state) => state.editableAbonementOffer;
@@ -9,7 +14,8 @@ const selectAbonementOfferData: TeacherSelector<IAbonementOffer> = (state) => se
 const selectAbonementOfferEditingFields: TeacherSelector<editingFields> = (state) => selectAbonementOffer(state).fieldsEditing;
 const selectAbonementOfferLimitLessons: TeacherSelector<number> = (state) => selectAbonementOfferData(state).limitLessons; 
 const selectAbonementOfferPrice: TeacherSelector<number> = (state) => selectAbonementOfferData(state).price; 
-const selectAbonementOfferAbonementType: TeacherSelector<abonementType> = (state) => selectAbonementOfferData(state).type; 
+const selectAbonementOfferAbonementType: TeacherSelector<abonementType> = (state) => selectAbonementOfferData(state).type;
+const selectAbonementOfferAbonementSubjects: TeacherSelector<id[]> = (state) => selectAbonementOfferData(state).subjects;  
 
 
 describe('Teacher Editable AbonementsOffer Commands', () => {
@@ -42,6 +48,16 @@ describe('Teacher Editable AbonementsOffer Commands', () => {
     await teacherStore.asyncDispatch(changeAbonementType.action(newAbonementType));
     const changedState = teacherStore.getState();
     expect(selectAbonementOfferAbonementType(changedState)).toBe(newAbonementType);
+  });
+
+  test('change Abonement Subject test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectAbonementOfferAbonementSubjects(initialState)).toEqual([]);
+    const newSubjects = ['aaa','bbb','ccc'];
+    await teacherStore.asyncDispatch(changeAbonementSubjects.action(newSubjects));
+    const changedState = teacherStore.getState();
+    expect(selectAbonementOfferAbonementSubjects(changedState)).toEqual(newSubjects);
   });
 });
 
