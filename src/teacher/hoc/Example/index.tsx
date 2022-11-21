@@ -18,6 +18,5 @@ export const ExampleTeacher: HOC = () => {
         Call number command
       </button>
     </>
-    
   )
 }
