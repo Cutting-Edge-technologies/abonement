@@ -2,7 +2,8 @@ import {
   changeAbonementLimitLessons,
   changeAbonementPrice,
   changeAbonementType,
-  changeAbonementSubjects
+  changeAbonementSubjects,
+  deleteAbonementSubject
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { TeacherSelector } from "../../../common/types/utility";
@@ -59,5 +60,17 @@ describe('Teacher Editable AbonementsOffer Commands', () => {
     const changedState = teacherStore.getState();
     expect(selectAbonementOfferAbonementSubjects(changedState)).toEqual(newSubjects);
   });
+
+  test('delete Abonement Subject test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectAbonementOfferAbonementSubjects(initialState)).toEqual([]);
+    const newSubjects = ['aaa','bbb','ccc'];
+    await teacherStore.asyncDispatch(changeAbonementSubjects.action(newSubjects));
+    const exampleId:id = newSubjects[0];
+    await teacherStore.asyncDispatch(deleteAbonementSubject.action(exampleId));
+    const changedState = teacherStore.getState();
+    expect(selectAbonementOfferAbonementSubjects(changedState).includes(exampleId)).toBeFalsy();
+  });  
 });
 
