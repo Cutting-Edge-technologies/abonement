@@ -116,8 +116,8 @@ export const changeRuleStartTime	= createCommand<Date>(
 
 export const changeRuleDuration	= createCommand<number>(
   'changeRuleDuration',
-  function*({payload: duration}) {
-    yield call(console.log,'changeRuleDuration', duration);
+  function*({payload: durationMin}) {
+    yield call(console.log,'changeRuleDuration', durationMin);
   }
 );
 
@@ -130,14 +130,28 @@ export const changeRuleMonthDay	= createCommand<Date>(
 
 export const changeAbonementSubjects	= createCommand<id[]>(
   'changeAbonementSubjects',
-  function*({payload: subjectIdArray}) {
-    yield call(console.log,'changeAbonementSubjects', subjectIdArray);
+  function*({payload: subjectsIdArray}) {
+    yield call(console.log,'changeAbonementSubjects', subjectsIdArray);
   }
 );
 
-export const deleteAbonementSubject	= createCommand<id[]>(
+export const deleteAbonementSubject	= createCommand<id>(
   'deleteAbonementSubject',
-  function*({payload: subjectIdArray}) {
-    yield call(console.log,'deleteAbonementSubject', subjectIdArray);
+  function*({payload: subjectId}) {
+    yield call(console.log,'deleteAbonementSubject', subjectId);
+  }
+);
+
+export const startChangeSubjectDescription = createCommand<void>(
+  'startChangeSubjectDescription',
+  function*() {
+    yield call(console.log,'startChangeSubjectDescription');
+  }
+);	
+
+export const confirmChangeSubjectDescription = createCommand<void>(
+  'confirmChangeSubjectDescription',
+  function*() {
+    yield call(console.log,'confirmChangeSubjectDescription');
   }
 );
