@@ -10,8 +10,8 @@ export const ExampleTeacher: HOC = () => {
   return (
     <>
       <div>Teacher</div>
-      <div className="message">{`The message is ${message}`}</div>
-      <div className="count">{`The count is ${count}`}</div>
+      <div className="message" role={'message'}>{`The message is ${message}`}</div>
+      <div className="count" role={'count'}>{`The count is ${count}`}</div>
       <div className="controlls" style={{display: 'flex', flexDirection: 'column', width: '60%'}}>
         <button
           onClick={() => dispatch(exampleCommand.action('Test message'))}
