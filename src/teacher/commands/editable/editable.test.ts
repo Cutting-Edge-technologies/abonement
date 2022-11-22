@@ -8,7 +8,8 @@ import {
   changeRulePeriodicityType,
   changeRuleStartTime,
   toggleRuleWeekDay,
-  changeRuleMonthDay
+  changeRuleMonthDay,
+  changeAbonementLimitTime
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { TeacherSelector } from "../../../common/types/utility";
@@ -21,7 +22,9 @@ const selectAbonementOfferEditingFields: TeacherSelector<editingFields> = (state
 const selectAbonementOfferLimitLessons: TeacherSelector<number> = (state) => selectAbonementOfferData(state).limitLessons; 
 const selectAbonementOfferPrice: TeacherSelector<number> = (state) => selectAbonementOfferData(state).price; 
 const selectAbonementOfferAbonementType: TeacherSelector<abonementType> = (state) => selectAbonementOfferData(state).type;
-const selectAbonementOfferAbonementSubjects: TeacherSelector<id[]> = (state) => selectAbonementOfferData(state).subjects;  
+const selectAbonementOfferAbonementSubjects: TeacherSelector<id[]> = (state) => selectAbonementOfferData(state).subjects;
+const selectAbonementOfferLimitTime: TeacherSelector<number> = (state) => selectAbonementOfferData(state).limitTime; 
+
 
 
 describe('Teacher Editable AbonementsOffer Commands', () => {
@@ -76,7 +79,17 @@ describe('Teacher Editable AbonementsOffer Commands', () => {
     await teacherStore.asyncDispatch(deleteAbonementSubject.action(exampleId));
     const changedState = teacherStore.getState();
     expect(selectAbonementOfferAbonementSubjects(changedState).includes(exampleId)).toBeFalsy();
-  });  
+  });
+
+  test('change Abonement Limit Time test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectAbonementOfferLimitTime(initialState)).toBe(0);
+    const newLimitTime = 45;
+    await teacherStore.asyncDispatch(changeAbonementLimitTime.action(newLimitTime));
+    const changedState = teacherStore.getState();
+    expect(selectAbonementOfferLimitTime(changedState)).toBe(newLimitTime);
+  });
 });
 
 const selectRule: TeacherSelector<IEditingResourceState<IRule>> = (state) => state.editableRule;
