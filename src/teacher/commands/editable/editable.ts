@@ -100,7 +100,7 @@ export const changeRulePeriodicityType = createCommand<PeriodicityType>(
   }
 );
 
-export const toggleRuleWeekDay = createCommand<number>(
+export const toggleRuleWeekDay = createCommand<number[]>(
   'toggleRuleWeekDay',
   function*({payload: weekDay}) {
     yield call(console.log,'toggleRuleWeekDay', weekDay);
