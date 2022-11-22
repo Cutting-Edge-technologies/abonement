@@ -39,6 +39,7 @@ export interface IAbonementConsumable extends IAbonement {
 }
 
 export interface ISubject extends IHaveId {
+  name: string;
   description: string;
   rules: id[];
 }

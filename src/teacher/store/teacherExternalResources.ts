@@ -3,6 +3,7 @@ import { createExternalResourceAPISlice } from "../../common/store/externalResou
 
 export const externalSubjectsSlice = createExternalResourceAPISlice<ISubject>({
   id: '',
+  name: '',
   description: '',
   rules: [],
 }, 'externalSubjects');

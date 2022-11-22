@@ -13,6 +13,7 @@ export const editableTeacherSlice = createEditingSlice<ITeacher>({
 
 export const editableSubjectSlice = createEditingSlice<ISubject>({
   id: '',
+  name: '',
   description: '',
   rules: [],
 }, 'editingSubject');
