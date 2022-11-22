@@ -24,19 +24,26 @@ import {
   changeTeacherDescription
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
-import { ArgumentSelector, TeacherSelector } from "../../../common/types/utility";
-import { abonementType, IAbonementOffer, id, IRule, ISubject, ITeacher, PeriodicityType } from "../../../common/types/domain";
-import { editingFields, IEditingResourceState } from "../../../common/store/editingEntitySlice";
-
-const selectAbonementOffer: TeacherSelector<IEditingResourceState<IAbonementOffer>> = (state) => state.editableAbonementOffer;
-const selectAbonementOfferData: TeacherSelector<IAbonementOffer> = (state) => selectAbonementOffer(state).data;
-const selectAbonementOfferLimitLessons: TeacherSelector<number> = (state) => selectAbonementOfferData(state).limitLessons; 
-const selectAbonementOfferPrice: TeacherSelector<number> = (state) => selectAbonementOfferData(state).price; 
-const selectAbonementOfferAbonementType: TeacherSelector<abonementType> = (state) => selectAbonementOfferData(state).type;
-const selectAbonementOfferAbonementSubjects: TeacherSelector<id[]> = (state) => selectAbonementOfferData(state).subjects;
-const selectAbonementOfferLimitTime: TeacherSelector<number> = (state) => selectAbonementOfferData(state).limitTime; 
-
-
+import { abonementType, id, PeriodicityType } from "../../../common/types/domain";
+import {
+  selectAbonementOfferLimitLessons,
+  selectAbonementOfferPrice,
+  selectAbonementOfferAbonementType,
+  selectAbonementOfferAbonementSubjects,
+  selectAbonementOfferLimitTime,
+  selectRuleDuration,
+  selectRulePeriodicityType,
+  selectRuleStartTime,
+  selectRuleperiodicityRule,
+  selectIsSubjectDescriptionEditing,
+  selectIsSubjectNameEditing,
+  selectSubjectDescription,
+  selectSubjectName,
+  selectIsTeacherDescriptionEditing,
+  selectIsTeacherNameEditing,
+  selectTeacherDescription,
+  selectTeacherName
+} from "../../selectors/editable"
 
 describe('Teacher Editable AbonementsOffer Commands', () => {
 
@@ -103,13 +110,6 @@ describe('Teacher Editable AbonementsOffer Commands', () => {
   });
 });
 
-const selectRule: TeacherSelector<IEditingResourceState<IRule>> = (state) => state.editableRule;
-const selectRuleData: TeacherSelector<IRule> = (state) => selectRule(state).data;
-const selectRuleDuration: TeacherSelector<number> = (state) => selectRuleData(state).durationMin;
-const selectRulePeriodicityType: TeacherSelector<PeriodicityType> = (state) => selectRuleData(state).periodicity.periodicityType;  
-const selectRuleStartTime: TeacherSelector<number> = (state) => selectRuleData(state).timeStart;
-const selectRuleperiodicityRule: TeacherSelector<number[]> = (state) => selectRuleData(state).periodicity.periodicityRule;
-
 describe('Teacher Editable Rule Commands', () => {
 
   test('change Rule Duration test', async () => {
@@ -169,20 +169,6 @@ describe('Teacher Editable Rule Commands', () => {
   });
 });
 
-const selectSubject: TeacherSelector<IEditingResourceState<ISubject>> = (state) => state.editableSubject;
-const selectSubjectData: TeacherSelector<ISubject> = (state) => selectSubject(state).data;
-const selectSubjectEditingFields: TeacherSelector<editingFields> = (state) => selectSubject(state).fieldsEditing;
-
-const isSubjectFieldEditingSelectorCreator: ArgumentSelector<TeacherSelector<boolean>> = (fieldName: string) => {
-  return (state) => selectSubjectEditingFields(state)[fieldName];
-}
-
-const selectIsSubjectNameEditing = isSubjectFieldEditingSelectorCreator('name');
-const selectIsSubjectDescriptionEditing = isSubjectFieldEditingSelectorCreator('description');
-const selectSubjectName: TeacherSelector<string> = (state) => selectSubjectData(state).name;
-const selectSubjectDescription: TeacherSelector<string> = (state) => selectSubjectData(state).description;
-
-
 describe('Teacher Editable Subject Commands', () => {
 
   test('start Change Subject Name test', async () => {
@@ -241,21 +227,6 @@ describe('Teacher Editable Subject Commands', () => {
     expect(selectSubjectDescription(changedState)).toBe(newSubjectDescription);
   });
 });
-
-const selectTeacher: TeacherSelector<IEditingResourceState<ITeacher>> = (state) => state.editableTeacher;
-const selectTeacherData: TeacherSelector<ITeacher> = (state) => selectTeacher(state).data;
-const selectTeacherEditingFields: TeacherSelector<editingFields> = (state) => selectTeacher(state).fieldsEditing;
-
-const isTeacherFieldEditingSelectorCreator: ArgumentSelector<TeacherSelector<boolean>> = (fieldName: string) => {
-  return (state) => selectTeacherEditingFields(state)[fieldName];
-}
-
-const selectIsTeacherNameEditing = isTeacherFieldEditingSelectorCreator('name');
-const selectIsTeacherDescriptionEditing = isTeacherFieldEditingSelectorCreator('description');
-
-const selectTeacherName: TeacherSelector<string> = (state) => selectTeacherData(state).name;
-const selectTeacherDescription: TeacherSelector<string> = (state) => selectTeacherData(state).description;
-
 
 describe('Teacher Editable Teacher Commands', () => {
 
