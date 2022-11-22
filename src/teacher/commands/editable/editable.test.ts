@@ -130,4 +130,17 @@ describe('Teacher Editable Rule Commands', () => {
     await teacherStore.asyncDispatch(toggleRuleWeekDay.action(changedWeekDay));
     expect(selectRuleperiodicityRule(newChangedState).includes(changedWeekDay)).toBeFalsy();
   });
+
+  test('change Rule Month Day test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectRuleperiodicityRule(initialState)).toBe([]);
+    const newMonthkDay = 28;
+    await teacherStore.asyncDispatch(changeRuleMonthDay.action(newMonthkDay));
+    const changedState = teacherStore.getState();
+    expect(selectRuleperiodicityRule(changedState).includes(newMonthkDay)).toBeTruthy();
+    const newChangedState = teacherStore.getState();
+    await teacherStore.asyncDispatch(changeRuleMonthDay.action(newMonthkDay));
+    expect(selectRuleperiodicityRule(newChangedState).includes(newMonthkDay)).toBeFalsy();
+  });
 });
