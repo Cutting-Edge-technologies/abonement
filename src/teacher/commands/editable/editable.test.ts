@@ -93,6 +93,8 @@ describe('Teacher Editable AbonementsOffer Commands', () => {
     expect(selectAbonementOfferAbonementSubjects(initialState)).toEqual([]);
     const newSubjects = ['aaa','bbb','ccc'];
     await teacherStore.asyncDispatch(changeAbonementSubjects.action(newSubjects));
+    const subjectsAddedState = teacherStore.getState();
+    expect(selectAbonementOfferAbonementSubjects(subjectsAddedState).length).toBeGreaterThan(0);
     const exampleId:id = newSubjects[0];
     await teacherStore.asyncDispatch(deleteAbonementSubject.action(exampleId));
     const changedState = teacherStore.getState();
