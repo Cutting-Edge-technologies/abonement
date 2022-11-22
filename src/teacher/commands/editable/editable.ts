@@ -121,7 +121,7 @@ export const changeRuleDuration = createCommand<number>(
   }
 );
 
-export const changeRuleMonthDay = createCommand<Date>(
+export const changeRuleMonthDay = createCommand<number>(
   'changeRuleMonthDay',
   function*({payload: monthDay}) {
     yield call(console.log,'changeRuleMonthDay', monthDay);
