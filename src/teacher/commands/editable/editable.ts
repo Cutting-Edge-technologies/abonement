@@ -107,7 +107,7 @@ export const toggleRuleWeekDay = createCommand<number>(
   }
 ); 
   
-export const changeRuleStartTime = createCommand<Date>(
+export const changeRuleStartTime = createCommand<number>(
   'changeRuleStartTime',
   function*({payload: startTime}) {
     yield call(console.log,'changeRuleStartTime', startTime);
