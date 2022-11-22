@@ -3,11 +3,12 @@ import {
   changeAbonementPrice,
   changeAbonementType,
   changeAbonementSubjects,
-  deleteAbonementSubject
+  deleteAbonementSubject,
+  changeRuleDuration
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { TeacherSelector } from "../../../common/types/utility";
-import { abonementType, IAbonementOffer, id, ISubject } from "../../../common/types/domain";
+import { abonementType, IAbonementOffer, id, IRule, ISubject } from "../../../common/types/domain";
 import { editingFields, IEditingResourceState } from "../../../common/store/editingEntitySlice";
 
 const selectAbonementOffer: TeacherSelector<IEditingResourceState<IAbonementOffer>> = (state) => state.editableAbonementOffer;
@@ -74,3 +75,19 @@ describe('Teacher Editable AbonementsOffer Commands', () => {
   });  
 });
 
+const selectRule: TeacherSelector<IEditingResourceState<IRule>> = (state) => state.editableRule;
+const selectRuleData: TeacherSelector<IRule> = (state) => selectRule(state).data;
+const selectRuleDuration: TeacherSelector<number> = (state) => selectRuleData(state).durationMin; 
+
+describe('Teacher Editable Rule Commands', () => {
+
+  test('change Rule Duration test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectRuleDuration(initialState)).toBe(0);
+    const newDurationMin = 15;
+    await teacherStore.asyncDispatch(changeRuleDuration.action(newDurationMin));
+    const changedState = teacherStore.getState();
+    expect(selectRuleDuration(changedState)).toBe(newDurationMin);
+  });
+});
