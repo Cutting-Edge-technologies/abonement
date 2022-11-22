@@ -4,11 +4,12 @@ import {
   changeAbonementType,
   changeAbonementSubjects,
   deleteAbonementSubject,
-  changeRuleDuration
+  changeRuleDuration,
+  changeRulePeriodicityType
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { TeacherSelector } from "../../../common/types/utility";
-import { abonementType, IAbonementOffer, id, IRule, ISubject } from "../../../common/types/domain";
+import { abonementType, IAbonementOffer, id, IRule, ISubject, PeriodicityType } from "../../../common/types/domain";
 import { editingFields, IEditingResourceState } from "../../../common/store/editingEntitySlice";
 
 const selectAbonementOffer: TeacherSelector<IEditingResourceState<IAbonementOffer>> = (state) => state.editableAbonementOffer;
@@ -77,7 +78,8 @@ describe('Teacher Editable AbonementsOffer Commands', () => {
 
 const selectRule: TeacherSelector<IEditingResourceState<IRule>> = (state) => state.editableRule;
 const selectRuleData: TeacherSelector<IRule> = (state) => selectRule(state).data;
-const selectRuleDuration: TeacherSelector<number> = (state) => selectRuleData(state).durationMin; 
+const selectRuleDuration: TeacherSelector<number> = (state) => selectRuleData(state).durationMin;
+const selectRulePeriodicityType: TeacherSelector<PeriodicityType> = (state) => selectRuleData(state).periodicity.periodicityType;  
 
 describe('Teacher Editable Rule Commands', () => {
 
@@ -89,5 +91,15 @@ describe('Teacher Editable Rule Commands', () => {
     await teacherStore.asyncDispatch(changeRuleDuration.action(newDurationMin));
     const changedState = teacherStore.getState();
     expect(selectRuleDuration(changedState)).toBe(newDurationMin);
+  });
+
+  test('change Rule Periodicity Type test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectRulePeriodicityType(initialState)).toBe(PeriodicityType.weekly);
+    const newPeriodicityType = PeriodicityType.manualDate;
+    await teacherStore.asyncDispatch(changeRulePeriodicityType.action(newPeriodicityType));
+    const changedState = teacherStore.getState();
+    expect(selectRuleDuration(changedState)).toBe(newPeriodicityType);
   });
 });
