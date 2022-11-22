@@ -155,3 +155,10 @@ export const confirmChangeSubjectDescription = createCommand<void>(
     yield call(console.log,'confirmChangeSubjectDescription');
   }
 );
+
+export const changeAbonementLimitTime = createCommand<number>(
+  'changeAbonementLimitTime',
+  function*({payload: caunt}) {
+    yield call(console.log,'changeAbonementLimitTime', caunt);
+  }
+);
