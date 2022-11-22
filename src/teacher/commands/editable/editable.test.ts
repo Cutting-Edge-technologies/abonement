@@ -15,16 +15,16 @@ import {
   startChangeSubjectDescription,
   confirmChangeSubjectDescription,
   changeSubjectName,
-  changeSubjectDescription
+  changeSubjectDescription,
+  startChangeTeacherName
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { ArgumentSelector, TeacherSelector } from "../../../common/types/utility";
-import { abonementType, IAbonementOffer, id, IRule, ISubject, PeriodicityType } from "../../../common/types/domain";
+import { abonementType, IAbonementOffer, id, IRule, ISubject, ITeacher, PeriodicityType } from "../../../common/types/domain";
 import { editingFields, IEditingResourceState } from "../../../common/store/editingEntitySlice";
 
 const selectAbonementOffer: TeacherSelector<IEditingResourceState<IAbonementOffer>> = (state) => state.editableAbonementOffer;
 const selectAbonementOfferData: TeacherSelector<IAbonementOffer> = (state) => selectAbonementOffer(state).data;
-const selectAbonementOfferEditingFields: TeacherSelector<editingFields> = (state) => selectAbonementOffer(state).fieldsEditing;
 const selectAbonementOfferLimitLessons: TeacherSelector<number> = (state) => selectAbonementOfferData(state).limitLessons; 
 const selectAbonementOfferPrice: TeacherSelector<number> = (state) => selectAbonementOfferData(state).price; 
 const selectAbonementOfferAbonementType: TeacherSelector<abonementType> = (state) => selectAbonementOfferData(state).type;
@@ -234,5 +234,27 @@ describe('Teacher Editable Subject Commands', () => {
     await teacherStore.asyncDispatch(changeSubjectDescription.action(newSubjectDescription));
     const changedState = teacherStore.getState();
     expect(selectSubjectDescription(changedState)).toBe(newSubjectDescription);
+  });
+});
+
+const selectTeacher: TeacherSelector<IEditingResourceState<ITeacher>> = (state) => state.editableTeacher;
+const selectTeacherData: TeacherSelector<ITeacher> = (state) => selectTeacher(state).data;
+const selectTeacherEditingFields: TeacherSelector<editingFields> = (state) => selectTeacher(state).fieldsEditing;
+
+const isTeacherFieldEditingSelectorCreator: ArgumentSelector<TeacherSelector<boolean>> = (fieldName: string) => {
+  return (state) => selectTeacherEditingFields(state)[fieldName];
+}
+
+const selectIsTeacherNameEditing = isTeacherFieldEditingSelectorCreator('name');
+
+describe('Teacher Editable Teacher Commands', () => {
+
+  test('start Change Teacher Name test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsTeacherNameEditing(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(startChangeTeacherName.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsTeacherNameEditing(changedState)).toBeTruthy();
   });
 });
