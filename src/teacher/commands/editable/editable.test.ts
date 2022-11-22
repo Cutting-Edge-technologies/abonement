@@ -5,7 +5,8 @@ import {
   changeAbonementSubjects,
   deleteAbonementSubject,
   changeRuleDuration,
-  changeRulePeriodicityType
+  changeRulePeriodicityType,
+  changeRuleStartTime
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { TeacherSelector } from "../../../common/types/utility";
@@ -80,6 +81,8 @@ const selectRule: TeacherSelector<IEditingResourceState<IRule>> = (state) => sta
 const selectRuleData: TeacherSelector<IRule> = (state) => selectRule(state).data;
 const selectRuleDuration: TeacherSelector<number> = (state) => selectRuleData(state).durationMin;
 const selectRulePeriodicityType: TeacherSelector<PeriodicityType> = (state) => selectRuleData(state).periodicity.periodicityType;  
+const selectRuleStartTime: TeacherSelector<number> = (state) => selectRuleData(state).timeStart;
+
 
 describe('Teacher Editable Rule Commands', () => {
 
@@ -101,5 +104,15 @@ describe('Teacher Editable Rule Commands', () => {
     await teacherStore.asyncDispatch(changeRulePeriodicityType.action(newPeriodicityType));
     const changedState = teacherStore.getState();
     expect(selectRuleDuration(changedState)).toBe(newPeriodicityType);
+  });
+
+  test('change Rule Start Time test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectRuleStartTime(initialState)).toBe(0);
+    const newStartTime = 20;
+    await teacherStore.asyncDispatch(changeRuleStartTime.action(newStartTime));
+    const changedState = teacherStore.getState();
+    expect(selectRuleStartTime(changedState)).toBe(newStartTime);
   });
 });
