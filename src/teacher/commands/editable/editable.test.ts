@@ -14,7 +14,8 @@ import {
   confirmChangeSubjectName,
   startChangeSubjectDescription,
   confirmChangeSubjectDescription,
-  changeSubjectName
+  changeSubjectName,
+  changeSubjectDescription
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { ArgumentSelector, TeacherSelector } from "../../../common/types/utility";
@@ -174,6 +175,7 @@ const isSubjectFieldEditingSelectorCreator: ArgumentSelector<TeacherSelector<boo
 const selectIsSubjectNameEditing = isSubjectFieldEditingSelectorCreator('name');
 const selectIsSubjectDescriptionEditing = isSubjectFieldEditingSelectorCreator('description');
 const selectSubjectName: TeacherSelector<string> = (state) => selectSubjectData(state).name;
+const selectSubjectDescription: TeacherSelector<string> = (state) => selectSubjectData(state).description;
 
 
 describe('Teacher Editable Subject Commands', () => {
@@ -222,5 +224,15 @@ describe('Teacher Editable Subject Commands', () => {
     await teacherStore.asyncDispatch(changeSubjectName.action(newSubjectName));
     const changedState = teacherStore.getState();
     expect(selectSubjectName(changedState)).toBe(newSubjectName);
+  });
+
+  test('change Subject Description test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectSubjectDescription(initialState)).toBe('');
+    const newSubjectDescription = 'Lorem ipsum';
+    await teacherStore.asyncDispatch(changeSubjectDescription.action(newSubjectDescription));
+    const changedState = teacherStore.getState();
+    expect(selectSubjectDescription(changedState)).toBe(newSubjectDescription);
   });
 });
