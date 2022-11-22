@@ -13,7 +13,8 @@ import {
   startChangeSubjectName,
   confirmChangeSubjectName,
   startChangeSubjectDescription,
-  confirmChangeSubjectDescription
+  confirmChangeSubjectDescription,
+  changeSubjectName
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { ArgumentSelector, TeacherSelector } from "../../../common/types/utility";
@@ -172,6 +173,7 @@ const isSubjectFieldEditingSelectorCreator: ArgumentSelector<TeacherSelector<boo
 
 const selectIsSubjectNameEditing = isSubjectFieldEditingSelectorCreator('name');
 const selectIsSubjectDescriptionEditing = isSubjectFieldEditingSelectorCreator('description');
+const selectSubjectName: TeacherSelector<string> = (state) => selectSubjectData(state).name;
 
 
 describe('Teacher Editable Subject Commands', () => {
@@ -210,5 +212,15 @@ describe('Teacher Editable Subject Commands', () => {
     await teacherStore.asyncDispatch(confirmChangeSubjectDescription.action());
     const changedState = teacherStore.getState();
     expect(selectIsSubjectDescriptionEditing(changedState)).toBeFalsy();
+  });
+
+  test('change Subject Name test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectSubjectName(initialState)).toBe('');
+    const newSubjectName = 'TratatataYoga';
+    await teacherStore.asyncDispatch(changeSubjectName.action(newSubjectName));
+    const changedState = teacherStore.getState();
+    expect(selectSubjectName(changedState)).toBe(newSubjectName);
   });
 });
