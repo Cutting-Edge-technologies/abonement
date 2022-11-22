@@ -3,8 +3,7 @@ import { abonementType, IAbonementOffer, IRule, ISubject, ITeacher, PeriodicityT
 
 export const editableTeacherSlice = createEditingSlice<ITeacher>({
   id: '',
-  firstName: '',
-  lastName: '',
+  name: '',
   abonementOffers: [],
   subjects: [],
   description: '',

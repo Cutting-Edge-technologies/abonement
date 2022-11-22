@@ -10,8 +10,7 @@ export interface ITakeTime {
 }
 
 export interface IUser extends IHaveId {
-  firstName: string;
-  lastName: string;
+  name: string;
   avatar: string;
 }
 

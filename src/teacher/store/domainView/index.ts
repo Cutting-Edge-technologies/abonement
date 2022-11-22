@@ -3,8 +3,7 @@ import { TeacherView } from '../../../common/types/teacherDomainView'
 
 const initialDomainView: TeacherView = {
   id: '',
-  firstName: 'Harry',
-  lastName: 'Potter',
+  name: 'Harry Potter',
   avatar: '',
   description: '',
   subjects: [],
