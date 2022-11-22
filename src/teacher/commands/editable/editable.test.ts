@@ -169,15 +169,14 @@ const isSubjectFieldEditingSelectorCreator: ArgumentSelector<TeacherSelector<boo
 
 const selectIsSubjectNameEditing = isSubjectFieldEditingSelectorCreator('name');
 
-// describe('Teacher Editable Subject Commands', () => {
-
-//   test('start Change Subject Name test', async () => {
-//     const teacherStore = teacherStoreCreator();
-//     const initialState = teacherStore.getState();
-//     expect(selectRuleDuration(initialState)).toBe(0);
-//     const newDurationMin = 15;
-//     await teacherStore.asyncDispatch(startChangeSubjectName.action());
-//     const changedState = teacherStore.getState();
-//     expect(selectRuleDuration(changedState)).toBe(newDurationMin);
-//   });
-// });
+describe('Teacher Editable Subject Commands', () => {
+  
+  test('start Change Subject Name test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsSubjectNameEditing(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(startChangeSubjectName.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsSubjectNameEditing(changedState)).toBeTruthy();
+  });
+});
