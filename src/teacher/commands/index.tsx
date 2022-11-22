@@ -1,16 +1,15 @@
 import { all, fork } from "redux-saga/effects";
-import { takeLatestCommandSafe } from "../../common/utilities/safeEffect";
 import * as exampleCommands from './example/exampleCommands';
-
-const exampleCommandsArray = Object.values(exampleCommands);
-
-function* watchExample() {
-  const effects = exampleCommandsArray.map((command) => takeLatestCommandSafe(command as any));
-  yield all(effects);
-}
+import * as domainCommands from './domain/domain';
+import * as editableCommands from './editable/editable';
+import * as navigationCommands from './novigation/navigation';
+import { watchCommandChapter } from "../../common/utilities/createCommand";
 
 export const teacherRootSaga = function*() {
   yield all([
-    fork(watchExample),
+    fork(watchCommandChapter(exampleCommands)),
+    fork(watchCommandChapter(domainCommands)),
+    fork(watchCommandChapter(editableCommands)),
+    fork(watchCommandChapter(navigationCommands)),
   ]);
 };

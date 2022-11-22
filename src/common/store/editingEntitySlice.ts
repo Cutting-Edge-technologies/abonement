@@ -1,10 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { IHaveId } from "../types/domain";
 
-export const createEditingSlice = <EditingResource extends {}>(editingResource: EditingResource, resourceName: string) => {
+export type editingFields = {[fieldName: string]: boolean};
 
-  const initialEditingResource = {
+export interface IEditingResourceState<EditingResource extends IHaveId> {
+  data: EditingResource;
+  fieldsEditing: editingFields;
+}
+
+export const createEditingSlice = <EditingResource extends IHaveId>(editingResource: EditingResource, resourceName: string) => {
+
+  const initialEditingResource: IEditingResourceState<EditingResource> = {
     data: editingResource,
-    fieldsEditing: {} as {[fieldName: string]: Boolean},
+    fieldsEditing: {},
   }
   
   const slice = createSlice({

@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { IHaveId } from '../types/domain';
 import { createExternalResourceAPISlice } from './externalResourceSlice';
 
-interface TestEntity {
+export interface TestEntity extends IHaveId {
   a: number;
   b: number;
   message: string;
 }
 
 const initialState: TestEntity = {
+  id: '',
   a: 0,
   b: 42,
   message: 'piece',
@@ -32,11 +34,13 @@ describe('external slice creator tests', () => {
   test('a data state could be changed', () => {
     const store = createStore();
     const resources: TestEntity[] = [{
+        id: '11',
         a: 77,
         b: 77,
         message: 'some77'
       },
       {
+        id: '22',
         a: 99,
         b: 87,
         message: 'some99'

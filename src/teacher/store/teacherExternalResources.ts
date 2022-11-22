@@ -3,6 +3,7 @@ import { createExternalResourceAPISlice } from "../../common/store/externalResou
 
 export const externalSubjectsSlice = createExternalResourceAPISlice<ISubject>({
   id: '',
+  name: '',
   description: '',
   rules: [],
 }, 'externalSubjects');
@@ -18,15 +19,13 @@ export const externalLessonsSlice = createExternalResourceAPISlice<ILesson>({
 
 export const externalUsersSlice = createExternalResourceAPISlice<IUser>({
   id: '',
-  firstName: '',
-  lastName: '',
+  name: '',
   avatar: '',
 }, 'externalUsers');
 
 export const externalTeachersSlice = createExternalResourceAPISlice<ITeacher>({
   id: '',
-  firstName: '',
-  lastName: '',
+  name: '',
   description: '',
   avatar: '',
   abonementOffers: [],

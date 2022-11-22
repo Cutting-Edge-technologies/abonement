@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createEditingSlice } from './editingEntitySlice';
+import { TestEntity } from './externalResourceSlice.test';
 
-const initialState = {
+const initialState: TestEntity = {
+  id: '',
   a: 0,
   b: 42,
   message: 'piece',
@@ -13,8 +15,6 @@ const createStore = () => {
   const store = configureStore({reducer: slice.reducer});
   return store;
 }
-
-
 
 describe('editing slice creator tests', () => {
 

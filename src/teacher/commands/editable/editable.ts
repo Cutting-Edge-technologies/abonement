@@ -107,7 +107,7 @@ export const toggleRuleWeekDay = createCommand<number>(
   }
 ); 
   
-export const changeRuleStartTime = createCommand<Date>(
+export const changeRuleStartTime = createCommand<number>(
   'changeRuleStartTime',
   function*({payload: startTime}) {
     yield call(console.log,'changeRuleStartTime', startTime);
@@ -121,7 +121,7 @@ export const changeRuleDuration = createCommand<number>(
   }
 );
 
-export const changeRuleMonthDay = createCommand<Date>(
+export const changeRuleMonthDay = createCommand<number>(
   'changeRuleMonthDay',
   function*({payload: monthDay}) {
     yield call(console.log,'changeRuleMonthDay', monthDay);
@@ -153,5 +153,12 @@ export const confirmChangeSubjectDescription = createCommand<void>(
   'confirmChangeSubjectDescription',
   function*() {
     yield call(console.log,'confirmChangeSubjectDescription');
+  }
+);
+
+export const changeAbonementLimitTime = createCommand<number>(
+  'changeAbonementLimitTime',
+  function*({payload: caunt}) {
+    yield call(console.log,'changeAbonementLimitTime', caunt);
   }
 );

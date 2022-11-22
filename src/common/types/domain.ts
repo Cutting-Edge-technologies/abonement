@@ -10,8 +10,7 @@ export interface ITakeTime {
 }
 
 export interface IUser extends IHaveId {
-  firstName: string;
-  lastName: string;
+  name: string;
   avatar: string;
 }
 
@@ -39,6 +38,7 @@ export interface IAbonementConsumable extends IAbonement {
 }
 
 export interface ISubject extends IHaveId {
+  name: string;
   description: string;
   rules: id[];
 }

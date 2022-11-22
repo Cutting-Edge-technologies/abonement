@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IHaveId } from "../types/domain";
 
 interface IExternalResourceState<ExternalResource> {
   data: ExternalResource[];
@@ -11,7 +12,7 @@ interface IExternalResourceFilters {
 
 // The slice that contains additional properties for handeling like search and page
 
-export const createExternalResourceAPISlice = <ExternalResource extends {}>(externalResource: ExternalResource, resourceName: string) => {
+export const createExternalResourceAPISlice = <ExternalResource extends IHaveId>(externalResource: ExternalResource, resourceName: string) => {
   const initialResource: IExternalResourceState<ExternalResource> = {
     data: [] as ExternalResource[],
     filters: { 
