@@ -17,7 +17,9 @@ import {
   changeSubjectName,
   changeSubjectDescription,
   startChangeTeacherName,
-  confirmChangeTeacherName
+  confirmChangeTeacherName,
+  startChangeTeacherDescription,
+  confirmChangeTeacherDescription
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { ArgumentSelector, TeacherSelector } from "../../../common/types/utility";
@@ -247,6 +249,7 @@ const isTeacherFieldEditingSelectorCreator: ArgumentSelector<TeacherSelector<boo
 }
 
 const selectIsTeacherNameEditing = isTeacherFieldEditingSelectorCreator('name');
+const selectIsTeacherDescriptionEditing = isTeacherFieldEditingSelectorCreator('description');
 
 describe('Teacher Editable Teacher Commands', () => {
 
@@ -267,4 +270,22 @@ describe('Teacher Editable Teacher Commands', () => {
     const changedState = teacherStore.getState();
     expect(selectIsTeacherNameEditing(changedState)).toBeFalsy();
   });
+
+test('start Change Teacher Description test', async () => {
+  const teacherStore = teacherStoreCreator();
+  const initialState = teacherStore.getState();
+  expect(selectIsTeacherDescriptionEditing(initialState)).toBeFalsy();
+  await teacherStore.asyncDispatch(startChangeTeacherDescription.action());
+  const changedState = teacherStore.getState();
+  expect(selectIsTeacherDescriptionEditing(changedState)).toBeTruthy();
+});
+
+test('confirm Change Teacher Description test', async () => {
+  const teacherStore = teacherStoreCreator();
+  const initialState = teacherStore.getState();
+  expect(selectIsTeacherDescriptionEditing(initialState)).toBeTruthy();
+  await teacherStore.asyncDispatch(confirmChangeTeacherDescription.action());
+  const changedState = teacherStore.getState();
+  expect(selectIsTeacherDescriptionEditing(changedState)).toBeFalsy();
+});
 });
