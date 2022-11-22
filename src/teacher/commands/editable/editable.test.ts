@@ -10,7 +10,10 @@ import {
   toggleRuleWeekDay,
   changeRuleMonthDay,
   changeAbonementLimitTime,
-  startChangeSubjectName
+  startChangeSubjectName,
+  confirmChangeSubjectName,
+  startChangeSubjectDescription,
+  confirmChangeSubjectDescription
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { ArgumentSelector, TeacherSelector } from "../../../common/types/utility";
@@ -168,9 +171,11 @@ const isSubjectFieldEditingSelectorCreator: ArgumentSelector<TeacherSelector<boo
 }
 
 const selectIsSubjectNameEditing = isSubjectFieldEditingSelectorCreator('name');
+const selectIsSubjectDescriptionEditing = isSubjectFieldEditingSelectorCreator('description');
+
 
 describe('Teacher Editable Subject Commands', () => {
-  
+
   test('start Change Subject Name test', async () => {
     const teacherStore = teacherStoreCreator();
     const initialState = teacherStore.getState();
@@ -178,5 +183,32 @@ describe('Teacher Editable Subject Commands', () => {
     await teacherStore.asyncDispatch(startChangeSubjectName.action());
     const changedState = teacherStore.getState();
     expect(selectIsSubjectNameEditing(changedState)).toBeTruthy();
+  });
+
+  test('confirm Change Subject Name test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsSubjectNameEditing(initialState)).toBeTruthy();
+    await teacherStore.asyncDispatch(confirmChangeSubjectName.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsSubjectNameEditing(changedState)).toBeFalsy();
+  });
+
+  test('start Change Subject Description test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsSubjectDescriptionEditing(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(startChangeSubjectDescription.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsSubjectDescriptionEditing(changedState)).toBeTruthy();
+  });
+
+  test('confirm Change Subject Description test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsSubjectDescriptionEditing(initialState)).toBeTruthy();
+    await teacherStore.asyncDispatch(confirmChangeSubjectDescription.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsSubjectDescriptionEditing(changedState)).toBeFalsy();
   });
 });
