@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IExampleDomainType } from "../../api/exampleApi";
+import { IExampleDomainType } from "../../api/example/exampleApi";
 
 const initialExample: IExampleDomainType = {
   message: '',
