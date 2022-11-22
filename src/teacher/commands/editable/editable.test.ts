@@ -20,7 +20,8 @@ import {
   confirmChangeTeacherName,
   startChangeTeacherDescription,
   confirmChangeTeacherDescription,
-  changeTeacherName
+  changeTeacherName,
+  changeTeacherDescription
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { ArgumentSelector, TeacherSelector } from "../../../common/types/utility";
@@ -253,6 +254,8 @@ const selectIsTeacherNameEditing = isTeacherFieldEditingSelectorCreator('name');
 const selectIsTeacherDescriptionEditing = isTeacherFieldEditingSelectorCreator('description');
 
 const selectTeacherName: TeacherSelector<string> = (state) => selectTeacherData(state).name;
+const selectTeacherDescription: TeacherSelector<string> = (state) => selectTeacherData(state).description;
+
 
 describe('Teacher Editable Teacher Commands', () => {
 
@@ -300,5 +303,15 @@ test('change Teacher Name test', async () => {
   await teacherStore.asyncDispatch(changeTeacherName.action(newTeacherName));
   const changedState = teacherStore.getState();
   expect(selectTeacherName(changedState)).toBe(newTeacherName);
+});
+
+test('change Teacher Description test', async () => {
+  const teacherStore = teacherStoreCreator();
+  const initialState = teacherStore.getState();
+  expect(selectTeacherDescription(initialState)).toBe('');
+  const newTeacherDescription = 'TratatataYoga teacher';
+  await teacherStore.asyncDispatch(changeTeacherDescription.action(newTeacherDescription));
+  const changedState = teacherStore.getState();
+  expect(selectTeacherDescription(changedState)).toBe(newTeacherDescription);
 });
 });
