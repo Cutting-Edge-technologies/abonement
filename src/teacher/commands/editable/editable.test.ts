@@ -9,10 +9,11 @@ import {
   changeRuleStartTime,
   toggleRuleWeekDay,
   changeRuleMonthDay,
-  changeAbonementLimitTime
+  changeAbonementLimitTime,
+  startChangeSubjectName
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
-import { TeacherSelector } from "../../../common/types/utility";
+import { ArgumentSelector, TeacherSelector } from "../../../common/types/utility";
 import { abonementType, IAbonementOffer, id, IRule, ISubject, PeriodicityType } from "../../../common/types/domain";
 import { editingFields, IEditingResourceState } from "../../../common/store/editingEntitySlice";
 
@@ -157,3 +158,26 @@ describe('Teacher Editable Rule Commands', () => {
     expect(selectRuleperiodicityRule(newChangedState).includes(newMonthkDay)).toBeFalsy();
   });
 });
+
+const selectSubject: TeacherSelector<IEditingResourceState<ISubject>> = (state) => state.editableSubject;
+const selectSubjectData: TeacherSelector<ISubject> = (state) => selectSubject(state).data;
+const selectSubjectEditingFields: TeacherSelector<editingFields> = (state) => selectSubject(state).fieldsEditing;
+
+const isSubjectFieldEditingSelectorCreator: ArgumentSelector<TeacherSelector<boolean>> = (fieldName: string) => {
+  return (state) => selectSubjectEditingFields(state)[fieldName];
+}
+
+const selectIsSubjectNameEditing = isSubjectFieldEditingSelectorCreator('name');
+
+// describe('Teacher Editable Subject Commands', () => {
+
+//   test('start Change Subject Name test', async () => {
+//     const teacherStore = teacherStoreCreator();
+//     const initialState = teacherStore.getState();
+//     expect(selectRuleDuration(initialState)).toBe(0);
+//     const newDurationMin = 15;
+//     await teacherStore.asyncDispatch(startChangeSubjectName.action());
+//     const changedState = teacherStore.getState();
+//     expect(selectRuleDuration(changedState)).toBe(newDurationMin);
+//   });
+// });
