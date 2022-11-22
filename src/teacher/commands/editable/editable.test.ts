@@ -16,7 +16,8 @@ import {
   confirmChangeSubjectDescription,
   changeSubjectName,
   changeSubjectDescription,
-  startChangeTeacherName
+  startChangeTeacherName,
+  confirmChangeTeacherName
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { ArgumentSelector, TeacherSelector } from "../../../common/types/utility";
@@ -256,5 +257,14 @@ describe('Teacher Editable Teacher Commands', () => {
     await teacherStore.asyncDispatch(startChangeTeacherName.action());
     const changedState = teacherStore.getState();
     expect(selectIsTeacherNameEditing(changedState)).toBeTruthy();
+  });
+
+  test('confirm Change Teacher Name test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsTeacherNameEditing(initialState)).toBeTruthy();
+    await teacherStore.asyncDispatch(confirmChangeTeacherName.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsTeacherNameEditing(changedState)).toBeFalsy();
   });
 });
