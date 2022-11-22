@@ -7,7 +7,8 @@ import {
   changeRuleDuration,
   changeRulePeriodicityType,
   changeRuleStartTime,
-  toggleRuleWeekDay
+  toggleRuleWeekDay,
+  changeRuleMonthDay
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { TeacherSelector } from "../../../common/types/utility";
@@ -83,7 +84,7 @@ const selectRuleData: TeacherSelector<IRule> = (state) => selectRule(state).data
 const selectRuleDuration: TeacherSelector<number> = (state) => selectRuleData(state).durationMin;
 const selectRulePeriodicityType: TeacherSelector<PeriodicityType> = (state) => selectRuleData(state).periodicity.periodicityType;  
 const selectRuleStartTime: TeacherSelector<number> = (state) => selectRuleData(state).timeStart;
-const selectRuleWeekDay: TeacherSelector<number[]> = (state) => selectRuleData(state).periodicity.periodicityRule;
+const selectRuleperiodicityRule: TeacherSelector<number[]> = (state) => selectRuleData(state).periodicity.periodicityRule;
 
 describe('Teacher Editable Rule Commands', () => {
 
@@ -120,13 +121,13 @@ describe('Teacher Editable Rule Commands', () => {
   test('change Rule Week Day test', async () => {
     const teacherStore = teacherStoreCreator();
     const initialState = teacherStore.getState();
-    expect(selectRuleWeekDay(initialState)).toBe([]);
+    expect(selectRuleperiodicityRule(initialState)).toBe([]);
     const changedWeekDay = 1;
     await teacherStore.asyncDispatch(toggleRuleWeekDay.action(changedWeekDay));
     const changedState = teacherStore.getState();
-    expect(selectRuleWeekDay(changedState).includes(changedWeekDay)).toBeTruthy();
+    expect(selectRuleperiodicityRule(changedState).includes(changedWeekDay)).toBeTruthy();
     const newChangedState = teacherStore.getState();
     await teacherStore.asyncDispatch(toggleRuleWeekDay.action(changedWeekDay));
-    expect(selectRuleWeekDay(changedState).includes(changedWeekDay)).toBeFalsy();
+    expect(selectRuleperiodicityRule(newChangedState).includes(changedWeekDay)).toBeFalsy();
   });
 });
