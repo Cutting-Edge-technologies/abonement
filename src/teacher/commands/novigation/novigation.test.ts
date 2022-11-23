@@ -5,7 +5,9 @@ import {
   setTecherCalendarRepresentationType,
   toggleRuleModalMode,
   subjectShowMore,
-  teacherShowMore
+  teacherShowMore,
+  startCreatingAbonements,
+  closeAbonementModal
 } from "./navigation";
 
 
@@ -13,6 +15,8 @@ const selectTeacherCalendarRepresentationType: TeacherSelector<TecherCalendarRep
 const selectRuleModalMode: TeacherSelector<ModalMode> = (state) => state.modal.ruleModalMode;
 const selectIsSubjectShowMore: TeacherSelector<boolean> = (state) => state.modal.subjectDescriptionShowMore;
 const selectIsTeacherShowMore: TeacherSelector<boolean> = (state) => state.modal.teacherDescriptionShowMore;
+const selectIsAbonementModal: TeacherSelector<boolean> = (state) => state.modal.isAbonementModalOpen;
+
 
 
 
@@ -60,6 +64,27 @@ describe('Teacher Novigation Commands', () => {
     await teacherStore.asyncDispatch(teacherShowMore.action());
     const againChangedState = teacherStore.getState();
     expect(selectIsSubjectShowMore(againChangedState)).toBeFalsy();
+  });
+
+  test('start Creating Abonements test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsAbonementModal(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(startCreatingAbonements.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsAbonementModal(changedState)).toBeTruthy();
+  });
+
+  test('close Creating Abonements test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsAbonementModal(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(startCreatingAbonements.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsAbonementModal(changedState)).toBeTruthy();
+    await teacherStore.asyncDispatch(closeAbonementModal.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectIsAbonementModal(againChangedState)).toBeFalsy();
   });
 });
 
