@@ -26,7 +26,10 @@ import {
   subjectListViewAbonements,
   lessonAcceptedView,
   lessonDiclainedView,
-  lessonPendingView
+  lessonPendingView,
+  confirmSavingAbonement,
+  confirmSavingRule,
+  confirmSavingSubject
 } from "./navigation";
 
 
@@ -255,6 +258,44 @@ describe('Teacher Novigation Commands', () => {
     expect(selectLessonView(changedState)).toBe(newLessonView);
     await teacherStore.asyncDispatch(lessonAcceptedView.action());
     const againChangedState = teacherStore.getState();
-    expect(selectLessonView(againChangedState)).toBe(LessonView.accepted);  });  
+    expect(selectLessonView(againChangedState)).toBe(LessonView.accepted);
+  });
+  
+  test('confirm Saving Abonements test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsAbonementModal(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(startCreatingAbonements.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsAbonementModal(changedState)).toBeTruthy();
+    await teacherStore.asyncDispatch(confirmSavingAbonement.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectIsAbonementModal(againChangedState)).toBeFalsy();
+  });
+
+  test('confirm Saving Rule test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsNewRuleModalOpen(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(startCreatingRule.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsNewRuleModalOpen(changedState)).toBeTruthy();
+    await teacherStore.asyncDispatch(confirmSavingRule.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectIsNewRuleModalOpen(againChangedState)).toBeFalsy();
+  });
+
+  test('confirm Saving Subject test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectTeacherView(initialState)).toBe(TeacherView.schedule);
+    const newTeacherView = TeacherView.subjectPage;
+    await teacherStore.asyncDispatch(startCreatingSubject.action());
+    const changedState = teacherStore.getState();
+    expect(selectTeacherView(changedState)).toBe(newTeacherView);
+    await teacherStore.asyncDispatch(confirmSavingSubject.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectTeacherView(againChangedState)).toBe(TeacherView.subjectList);
+  });
 });
 
