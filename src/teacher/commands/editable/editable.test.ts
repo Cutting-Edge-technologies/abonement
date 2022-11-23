@@ -24,7 +24,8 @@ import {
   changeTeacherDescription,
   startEditingSubject,
   startEditingAbonementOffer,
-  startEditingRule
+  startEditingRule,
+  startDeletingRule
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { abonementType, id, PeriodicityType } from "../../../common/types/domain";
@@ -48,7 +49,8 @@ import {
   selectTeacherName,
   selectSubjectId,
   selectAbonementOfferId,
-  selectRuleId
+  selectRuleId,
+  selectSubjectRules as selectSubjectRules
 } from "../../selectors/editable"
 
 describe('Teacher Editable AbonementsOffer Commands', () => {
@@ -311,7 +313,7 @@ describe('Editable Commands whith Id', () => {
     const teacherStore = teacherStoreCreator();
     const initialState = teacherStore.getState();
     expect(selectAbonementOfferId(initialState)).toBe('');
-    const abonemetOfferId = '123;'
+    const abonemetOfferId = '123';
     await teacherStore.asyncDispatch(startEditingAbonementOffer.action(abonemetOfferId));
     const changedState = teacherStore.getState();
     expect(selectAbonementOfferId(changedState)).toBe(abonemetOfferId);
@@ -321,9 +323,19 @@ describe('Editable Commands whith Id', () => {
     const teacherStore = teacherStoreCreator();
     const initialState = teacherStore.getState();
     expect(selectRuleId(initialState)).toBe('');
-    const ruleId = '123;'
+    const ruleId = '123';
     await teacherStore.asyncDispatch(startEditingRule.action(ruleId));
     const changedState = teacherStore.getState();
     expect(selectRuleId(changedState)).toBe(ruleId);
+  });
+
+  test('start Delete Rule test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectSubjectRules(initialState)).toBe([]);
+    const ruleId = '123';
+    await teacherStore.asyncDispatch(startDeletingRule.action(ruleId));
+    const changedState = teacherStore.getState();
+    expect(selectSubjectRules(changedState).includes(ruleId)).toBeFalsy();
   });
 });
