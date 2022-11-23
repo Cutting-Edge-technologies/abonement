@@ -13,7 +13,9 @@ import {
   openLessonAddParticipiantModal,
   closeLessonAddParticipiantModal,
   navigateSubjectList,
-  navigateSchedule
+  navigateSchedule,
+  startCreatingSubject,
+  cancelModifySubject
 } from "./navigation";
 
 
@@ -158,6 +160,29 @@ describe('Teacher Novigation Commands', () => {
     const changedState = teacherStore.getState();
     expect(selectTeacherView(changedState)).toBe(newTeacherView);
     await teacherStore.asyncDispatch(navigateSchedule.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectTeacherView(againChangedState)).toBe(TeacherView.schedule);
+  });
+
+  test('start Creating Subject test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectTeacherView(initialState)).toBe(TeacherView.schedule);
+    const newTeacherView = TeacherView.subjectPage;
+    await teacherStore.asyncDispatch(startCreatingSubject.action());
+    const changedState = teacherStore.getState();
+    expect(selectTeacherView(changedState)).toBe(newTeacherView);
+  });
+
+  test('cancel Modify Subject test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectTeacherView(initialState)).toBe(TeacherView.schedule);
+    const newTeacherView = TeacherView.subjectPage;
+    await teacherStore.asyncDispatch(startCreatingSubject.action());
+    const changedState = teacherStore.getState();
+    expect(selectTeacherView(changedState)).toBe(newTeacherView);
+    await teacherStore.asyncDispatch(cancelModifySubject.action());
     const againChangedState = teacherStore.getState();
     expect(selectTeacherView(againChangedState)).toBe(TeacherView.schedule);
   });  
