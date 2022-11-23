@@ -4,7 +4,8 @@ import {
   ModalMode,
   TecherCalendarRepresentationType,
   TeacherView,
-  SubjectListView
+  SubjectListView,
+  LessonView
 } from "../../store/modal";
 import {
   setTecherCalendarRepresentationType,
@@ -22,7 +23,10 @@ import {
   startCreatingSubject,
   cancelModifySubject,
   subcectListViewSubjects,
-  subjectListViewAbonements
+  subjectListViewAbonements,
+  lessonAcceptedView,
+  lessonDiclainedView,
+  lessonPendingView
 } from "./navigation";
 
 
@@ -35,6 +39,8 @@ const selectIsNewRuleModalOpen: TeacherSelector<boolean> = (state) => state.moda
 const selectIsLessonAddParticipantModalOpen: TeacherSelector<boolean> = (state) => state.modal.isLessonAddParticipantModalOpen;
 const selectTeacherView: TeacherSelector<TeacherView> = (state) => state.modal.teacherView;
 const selectSubjectListView: TeacherSelector<SubjectListView> = (state) => state.modal.subjectListView;
+const selectLessonView: TeacherSelector<LessonView> = (state) => state.modal.lessonView;
+
 
 
 
@@ -217,6 +223,38 @@ describe('Teacher Novigation Commands', () => {
     await teacherStore.asyncDispatch(subcectListViewSubjects.action());
     const againChangedState = teacherStore.getState();
     expect(selectSubjectListView(againChangedState)).toBe(SubjectListView.subjects);
-  });  
+  });
+
+  test('change LessonView to declained test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectLessonView(initialState)).toBe(LessonView.accepted);
+    const newLessonView = LessonView.declained;
+    await teacherStore.asyncDispatch(lessonDiclainedView.action());
+    const changedState = teacherStore.getState();
+    expect(selectLessonView(changedState)).toBe(newLessonView);
+  });
+
+  test('change LessonView to pending test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectLessonView(initialState)).toBe(LessonView.accepted);
+    const newLessonView = LessonView.pending;
+    await teacherStore.asyncDispatch(lessonPendingView.action());
+    const changedState = teacherStore.getState();
+    expect(selectLessonView(changedState)).toBe(newLessonView);
+  });
+
+  test('change LessonView to accepted test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectLessonView(initialState)).toBe(LessonView.accepted);
+    const newLessonView = LessonView.pending;
+    await teacherStore.asyncDispatch(lessonPendingView.action());
+    const changedState = teacherStore.getState();
+    expect(selectLessonView(changedState)).toBe(newLessonView);
+    await teacherStore.asyncDispatch(lessonAcceptedView.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectLessonView(againChangedState)).toBe(LessonView.accepted);  });  
 });
 
