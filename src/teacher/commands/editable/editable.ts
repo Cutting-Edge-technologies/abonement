@@ -170,10 +170,10 @@ export const startEditingSubject = createCommand<id>(
   }
 );
 
-export const startEditingAbonement = createCommand<id>(
-  'startEditingAbonement',
+export const startEditingAbonementOffer = createCommand<id>(
+  'startEditingAbonementOffer',
   function*({payload: abonementId}) {
-    yield call(console.log,'startEditingAbonement', abonementId);
+    yield call(console.log,'startEditingAbonementOffer', abonementId);
   }
 );
 
