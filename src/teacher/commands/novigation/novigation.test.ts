@@ -9,7 +9,9 @@ import {
   startCreatingAbonements,
   closeAbonementModal,
   startCreatingRule,
-  cancelModifyRule
+  cancelModifyRule,
+  openLessonAddParticipiantModal,
+  closeLessonAddParticipiantModal
 } from "./navigation";
 
 
@@ -19,6 +21,8 @@ const selectIsSubjectShowMore: TeacherSelector<boolean> = (state) => state.modal
 const selectIsTeacherShowMore: TeacherSelector<boolean> = (state) => state.modal.teacherDescriptionShowMore;
 const selectIsAbonementModal: TeacherSelector<boolean> = (state) => state.modal.isAbonementModalOpen;
 const selectIsNewRuleModalOpen: TeacherSelector<boolean> = (state) => state.modal.isNewRuleModalOpen;
+const selectIsLessonAddParticipantModalOpen: TeacherSelector<boolean> = (state) => state.modal.isLessonAddParticipantModalOpen;
+
 
 
 
@@ -109,6 +113,27 @@ describe('Teacher Novigation Commands', () => {
     await teacherStore.asyncDispatch(cancelModifyRule.action());
     const againChangedState = teacherStore.getState();
     expect(selectIsNewRuleModalOpen(againChangedState)).toBeFalsy();
+  });
+
+  test('open Lesson Add Participiant Modal test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsLessonAddParticipantModalOpen(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(openLessonAddParticipiantModal.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsLessonAddParticipantModalOpen(changedState)).toBeTruthy();
+  });
+
+  test('close Lesson Add Participiant Modal test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsLessonAddParticipantModalOpen(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(openLessonAddParticipiantModal.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsLessonAddParticipantModalOpen(changedState)).toBeTruthy();
+    await teacherStore.asyncDispatch(closeLessonAddParticipiantModal.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectIsLessonAddParticipantModalOpen(againChangedState)).toBeFalsy();
   });
 });
 
