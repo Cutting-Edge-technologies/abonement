@@ -1,18 +1,10 @@
 import { call } from "redux-saga/effects";
-import { id } from "../../../common/types/domain";
 import { createCommand } from "../../../common/utilities/createCommand";
 
 export const setTecherCalendarRepresentationType = createCommand<void>(
   'setTecherCalendarRepresentationType',
   function*() {
     yield call(console.log,'setTecherCalendarRepresentationType');
-  }
-);
-
-export const navigateLesson = createCommand<id>(
-  'navigateLesson',
-  function*({payload: lessonId}) {
-    yield call(console.log,'navigateLesson', lessonId);
   }
 );
 
