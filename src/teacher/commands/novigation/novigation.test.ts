@@ -7,7 +7,9 @@ import {
   subjectShowMore,
   teacherShowMore,
   startCreatingAbonements,
-  closeAbonementModal
+  closeAbonementModal,
+  startCreatingRule,
+  cancelModifyRule
 } from "./navigation";
 
 
@@ -16,6 +18,7 @@ const selectRuleModalMode: TeacherSelector<ModalMode> = (state) => state.modal.r
 const selectIsSubjectShowMore: TeacherSelector<boolean> = (state) => state.modal.subjectDescriptionShowMore;
 const selectIsTeacherShowMore: TeacherSelector<boolean> = (state) => state.modal.teacherDescriptionShowMore;
 const selectIsAbonementModal: TeacherSelector<boolean> = (state) => state.modal.isAbonementModalOpen;
+const selectIsNewRuleModalOpen: TeacherSelector<boolean> = (state) => state.modal.isNewRuleModalOpen;
 
 
 
@@ -85,6 +88,27 @@ describe('Teacher Novigation Commands', () => {
     await teacherStore.asyncDispatch(closeAbonementModal.action());
     const againChangedState = teacherStore.getState();
     expect(selectIsAbonementModal(againChangedState)).toBeFalsy();
+  });
+
+  test('start Creating Rule test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsNewRuleModalOpen(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(startCreatingRule.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsNewRuleModalOpen(changedState)).toBeTruthy();
+  });
+
+  test('close Modify Rule test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectIsNewRuleModalOpen(initialState)).toBeFalsy();
+    await teacherStore.asyncDispatch(startCreatingRule.action());
+    const changedState = teacherStore.getState();
+    expect(selectIsNewRuleModalOpen(changedState)).toBeTruthy();
+    await teacherStore.asyncDispatch(cancelModifyRule.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectIsNewRuleModalOpen(againChangedState)).toBeFalsy();
   });
 });
 
