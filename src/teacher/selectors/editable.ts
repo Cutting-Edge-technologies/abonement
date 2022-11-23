@@ -45,5 +45,7 @@ export const selectTeacherDescription: TeacherSelector<string> = (state) => sele
 
 export const selectSubjectId: TeacherSelector<id> = (state) => selectSubjectData(state).id;
 export const selectRuleId: TeacherSelector<id> = (state) => selectRuleData(state).id;
-export const selectAbonementOfferId: TeacherSelector<id> = (state) => selectAbonementOfferData(state).id; 
+export const selectAbonementOfferId: TeacherSelector<id> = (state) => selectAbonementOfferData(state).id;
+export const selectSubjectRules: TeacherSelector<id[]> = (state) => selectSubjectData(state).rules;
+
 
