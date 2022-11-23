@@ -22,3 +22,31 @@ export const startTeacherApp = createCommand<void>(
     yield call(console.log,'startTeacherApp');
   }
 );
+
+export const startDeletingRule = createCommand<id>(
+  'startDeletingRule',
+  function*({payload: ruleId}) {
+    yield call(console.log,'startDeletingRule', ruleId);
+  }
+);
+
+export const confirmSavingAbonement = createCommand<void>(
+  'confirmSavingAbonement',
+  function*() {
+    yield call(console.log,'confirmSavingAbonement');
+  }
+);
+
+export const confirmSavingSubject = createCommand<void>(
+  'confirmSavingSubject',
+  function*() {
+    yield call(console.log,'confirmSavingSubject');
+  }
+);
+
+export const confirmSavingRule = createCommand<void>(
+  'confirmSavingRule',
+  function*() {
+    yield call(console.log,'confirmSavingRule');
+  }
+);
