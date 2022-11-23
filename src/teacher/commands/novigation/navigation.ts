@@ -2,10 +2,10 @@ import { call } from "redux-saga/effects";
 import { id } from "../../../common/types/domain";
 import { createCommand } from "../../../common/utilities/createCommand";
 
-export const setTeacherScheduleView = createCommand<void>(
-  'setTeacherScheduleView',
+export const setTecherCalendarRepresentationType = createCommand<void>(
+  'setTecherCalendarRepresentationType',
   function*() {
-    yield call(console.log,'setTeacherScheduleView');
+    yield call(console.log,'setTecherCalendarRepresentationType');
   }
 );
 
