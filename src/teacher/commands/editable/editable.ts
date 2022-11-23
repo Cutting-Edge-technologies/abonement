@@ -183,3 +183,10 @@ export const startEditingRule = createCommand<id>(
     yield call(console.log,'startEditingRule', ruleId);
   }
 );
+
+export const startDeletingRule = createCommand<id>(
+  'startDeletingRule',
+  function*({payload: ruleId}) {
+    yield call(console.log,'startDeletingRule', ruleId);
+  }
+);

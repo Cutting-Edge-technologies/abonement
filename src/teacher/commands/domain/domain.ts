@@ -15,13 +15,6 @@ export const startDeletingAbonement = createCommand<id>(
     yield call(console.log,'startDeletingAbonement', abonementId);
   }
 ); 
- 
-export const startDeletingRule = createCommand<id>(
-  'startDeletingRule',
-  function*({payload: ruleId}) {
-    yield call(console.log,'startDeletingRule', ruleId);
-  }
-);
 
 export const startTeacherApp = createCommand<void>(
   'startTeacherApp',
