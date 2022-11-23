@@ -162,3 +162,24 @@ export const changeAbonementLimitTime = createCommand<number>(
     yield call(console.log,'changeAbonementLimitTime', caunt);
   }
 );
+
+export const startEditingSubject = createCommand<id>(
+  'startEditingSubject',
+  function*({payload: subjectId}) {
+    yield call(console.log,'startEditingSubject', subjectId);
+  }
+);
+
+export const startEditingAbonement = createCommand<id>(
+  'startEditingAbonement',
+  function*({payload: abonementId}) {
+    yield call(console.log,'startEditingAbonement', abonementId);
+  }
+);
+
+export const startEditingRule = createCommand<id>(
+  'startEditingRule',
+  function*({payload: ruleId}) {
+    yield call(console.log,'startEditingRule', ruleId);
+  }
+);
