@@ -42,3 +42,8 @@ export const selectIsTeacherNameEditing = isTeacherFieldEditingSelectorCreator('
 export const selectIsTeacherDescriptionEditing = isTeacherFieldEditingSelectorCreator('description');
 export const selectTeacherName: TeacherSelector<string> = (state) => selectTeacherData(state).name;
 export const selectTeacherDescription: TeacherSelector<string> = (state) => selectTeacherData(state).description;
+
+export const selectSubjectId: TeacherSelector<id> = (state) => selectSubjectData(state).id;
+export const selectRuleId: TeacherSelector<id> = (state) => selectRuleData(state).id;
+export const selectAbonementOfferId: TeacherSelector<id> = (state) => selectAbonementOfferData(state).id; 
+

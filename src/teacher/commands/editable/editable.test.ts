@@ -21,7 +21,10 @@ import {
   startChangeTeacherDescription,
   confirmChangeTeacherDescription,
   changeTeacherName,
-  changeTeacherDescription
+  changeTeacherDescription,
+  startEditingSubject,
+  startEditingAbonementOffer,
+  startEditingRule
 } from "./editable";
 import {teacherStoreCreator} from "../../store"
 import { abonementType, id, PeriodicityType } from "../../../common/types/domain";
@@ -42,7 +45,10 @@ import {
   selectIsTeacherDescriptionEditing,
   selectIsTeacherNameEditing,
   selectTeacherDescription,
-  selectTeacherName
+  selectTeacherName,
+  selectSubjectId,
+  selectAbonementOfferId,
+  selectRuleId
 } from "../../selectors/editable"
 
 describe('Teacher Editable AbonementsOffer Commands', () => {
@@ -287,4 +293,37 @@ test('change Teacher Description test', async () => {
   const changedState = teacherStore.getState();
   expect(selectTeacherDescription(changedState)).toBe(newTeacherDescription);
 });
+});
+
+describe('Editable Commands whith Id', () => {
+
+  test('start Editing Subject test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectSubjectId(initialState)).toBe('');
+    const subjectId = '123;'
+    await teacherStore.asyncDispatch(startEditingSubject.action(subjectId));
+    const changedState = teacherStore.getState();
+    expect(selectSubjectId(changedState)).toBe(subjectId);
+  });
+
+  test('start Editing AbonemetOffer test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectAbonementOfferId(initialState)).toBe('');
+    const abonemetOfferId = '123;'
+    await teacherStore.asyncDispatch(startEditingAbonementOffer.action(abonemetOfferId));
+    const changedState = teacherStore.getState();
+    expect(selectAbonementOfferId(changedState)).toBe(abonemetOfferId);
+  });
+
+  test('start Editing Rule test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectRuleId(initialState)).toBe('');
+    const ruleId = '123;'
+    await teacherStore.asyncDispatch(startEditingRule.action(ruleId));
+    const changedState = teacherStore.getState();
+    expect(selectRuleId(changedState)).toBe(ruleId);
+  });
 });

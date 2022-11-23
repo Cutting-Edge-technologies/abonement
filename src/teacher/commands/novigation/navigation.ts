@@ -1,18 +1,10 @@
 import { call } from "redux-saga/effects";
-import { id } from "../../../common/types/domain";
 import { createCommand } from "../../../common/utilities/createCommand";
 
-export const setTeacherScheduleView = createCommand<void>(
-  'setTeacherScheduleView',
+export const setTecherCalendarRepresentationType = createCommand<void>(
+  'setTecherCalendarRepresentationType',
   function*() {
-    yield call(console.log,'setTeacherScheduleView');
-  }
-);
-
-export const navigateLesson = createCommand<id>(
-  'navigateLesson',
-  function*({payload: lessonId}) {
-    yield call(console.log,'navigateLesson', lessonId);
+    yield call(console.log,'setTecherCalendarRepresentationType');
   }
 );
 
@@ -58,20 +50,6 @@ export const startCreatingSubject = createCommand<void>(
   }
 );
 
-export const startEditingSubject = createCommand<id>(
-  'startEditingSubject',
-  function*({payload: subjectId}) {
-    yield call(console.log,'startEditingSubject', subjectId);
-  }
-);
-
-export const startEditingAbonement = createCommand<id>(
-  'startEditingAbonement',
-  function*({payload: abonementId}) {
-    yield call(console.log,'startEditingAbonement', abonementId);
-  }
-);
-
 export const startCreatingAbonements = createCommand<void>(
   'startCreatingAbonements',
   function*() {
@@ -104,13 +82,6 @@ export const teacherShowMore = createCommand<void>(
   'teacherShowMore',
   function*() {
     yield call(console.log,'teacherShowMore');
-  }
-);
-
-export const startEditingRule = createCommand<id>(
-  'startEditingRule',
-  function*({payload: ruleId}) {
-    yield call(console.log,'startEditingRule', ruleId);
   }
 );
 
