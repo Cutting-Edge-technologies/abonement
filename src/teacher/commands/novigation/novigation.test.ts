@@ -1,5 +1,4 @@
 import { teacherStoreCreator } from "../../store";
-import {TeacherSelector} from "../../../common/types/utility";
 import { 
   ModalMode,
   TecherCalendarRepresentationType,
@@ -31,25 +30,18 @@ import {
   confirmSavingRule,
   confirmSavingSubject
 } from "./navigation";
-
-
-const selectTeacherCalendarRepresentationType: TeacherSelector<TecherCalendarRepresentationType> = (state) => state.modal.techerCalendarRepresentationType;
-const selectRuleModalMode: TeacherSelector<ModalMode> = (state) => state.modal.ruleModalMode;
-const selectIsSubjectShowMore: TeacherSelector<boolean> = (state) => state.modal.subjectDescriptionShowMore;
-const selectIsTeacherShowMore: TeacherSelector<boolean> = (state) => state.modal.teacherDescriptionShowMore;
-const selectIsAbonementModal: TeacherSelector<boolean> = (state) => state.modal.isAbonementModalOpen;
-const selectIsNewRuleModalOpen: TeacherSelector<boolean> = (state) => state.modal.isNewRuleModalOpen;
-const selectIsLessonAddParticipantModalOpen: TeacherSelector<boolean> = (state) => state.modal.isLessonAddParticipantModalOpen;
-const selectTeacherView: TeacherSelector<TeacherView> = (state) => state.modal.teacherView;
-const selectSubjectListView: TeacherSelector<SubjectListView> = (state) => state.modal.subjectListView;
-const selectLessonView: TeacherSelector<LessonView> = (state) => state.modal.lessonView;
-
-
-
-
-
-
-
+import {
+  selectIsAbonementModal,
+  selectIsLessonAddParticipantModalOpen,
+  selectIsNewRuleModalOpen,
+  selectIsSubjectShowMore,
+  selectIsTeacherShowMore,
+  selectLessonView,
+  selectRuleModalMode,
+  selectSubjectListView,
+  selectTeacherCalendarRepresentationType,
+  selectTeacherView
+} from "../../../teacher/selectors/novigation"
 describe('Teacher Novigation Commands', () => {
 
   test('set Teacher CalendarRepresentationType test', async () => {
