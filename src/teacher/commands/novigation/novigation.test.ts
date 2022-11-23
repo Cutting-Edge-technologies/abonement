@@ -1,6 +1,11 @@
 import { teacherStoreCreator } from "../../store";
 import {TeacherSelector} from "../../../common/types/utility";
-import { ModalMode, TecherCalendarRepresentationType, TeacherView } from "../../store/modal";
+import { 
+  ModalMode,
+  TecherCalendarRepresentationType,
+  TeacherView,
+  SubjectListView
+} from "../../store/modal";
 import {
   setTecherCalendarRepresentationType,
   toggleRuleModalMode,
@@ -15,7 +20,9 @@ import {
   navigateSubjectList,
   navigateSchedule,
   startCreatingSubject,
-  cancelModifySubject
+  cancelModifySubject,
+  subcectListViewSubjects,
+  subjectListViewAbonements
 } from "./navigation";
 
 
@@ -27,6 +34,8 @@ const selectIsAbonementModal: TeacherSelector<boolean> = (state) => state.modal.
 const selectIsNewRuleModalOpen: TeacherSelector<boolean> = (state) => state.modal.isNewRuleModalOpen;
 const selectIsLessonAddParticipantModalOpen: TeacherSelector<boolean> = (state) => state.modal.isLessonAddParticipantModalOpen;
 const selectTeacherView: TeacherSelector<TeacherView> = (state) => state.modal.teacherView;
+const selectSubjectListView: TeacherSelector<SubjectListView> = (state) => state.modal.subjectListView;
+
 
 
 
@@ -185,6 +194,29 @@ describe('Teacher Novigation Commands', () => {
     await teacherStore.asyncDispatch(cancelModifySubject.action());
     const againChangedState = teacherStore.getState();
     expect(selectTeacherView(againChangedState)).toBe(TeacherView.schedule);
+  });
+
+  test('change subjectListView to Abonements test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectSubjectListView(initialState)).toBe(SubjectListView.subjects);
+    const newSubjectListView = SubjectListView.abonements;
+    await teacherStore.asyncDispatch(subjectListViewAbonements.action());
+    const changedState = teacherStore.getState();
+    expect(selectSubjectListView(changedState)).toBe(newSubjectListView);
+  });
+
+  test('change subjectListView to Subjects test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectSubjectListView(initialState)).toBe(SubjectListView.subjects);
+    const newSubjectListView = SubjectListView.abonements;
+    await teacherStore.asyncDispatch(subjectListViewAbonements.action());
+    const changedState = teacherStore.getState();
+    expect(selectSubjectListView(changedState)).toBe(newSubjectListView);
+    await teacherStore.asyncDispatch(subcectListViewSubjects.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectSubjectListView(againChangedState)).toBe(SubjectListView.subjects);
   });  
 });
 
