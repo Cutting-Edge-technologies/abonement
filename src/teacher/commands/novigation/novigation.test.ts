@@ -1,6 +1,6 @@
 import { teacherStoreCreator } from "../../store";
 import {TeacherSelector} from "../../../common/types/utility";
-import { ModalMode, TecherCalendarRepresentationType } from "../../store/modal";
+import { ModalMode, TecherCalendarRepresentationType, TeacherView } from "../../store/modal";
 import {
   setTecherCalendarRepresentationType,
   toggleRuleModalMode,
@@ -11,7 +11,9 @@ import {
   startCreatingRule,
   cancelModifyRule,
   openLessonAddParticipiantModal,
-  closeLessonAddParticipiantModal
+  closeLessonAddParticipiantModal,
+  navigateSubjectList,
+  navigateSchedule
 } from "./navigation";
 
 
@@ -22,6 +24,7 @@ const selectIsTeacherShowMore: TeacherSelector<boolean> = (state) => state.modal
 const selectIsAbonementModal: TeacherSelector<boolean> = (state) => state.modal.isAbonementModalOpen;
 const selectIsNewRuleModalOpen: TeacherSelector<boolean> = (state) => state.modal.isNewRuleModalOpen;
 const selectIsLessonAddParticipantModalOpen: TeacherSelector<boolean> = (state) => state.modal.isLessonAddParticipantModalOpen;
+const selectTeacherView: TeacherSelector<TeacherView> = (state) => state.modal.teacherView;
 
 
 
@@ -135,5 +138,28 @@ describe('Teacher Novigation Commands', () => {
     const againChangedState = teacherStore.getState();
     expect(selectIsLessonAddParticipantModalOpen(againChangedState)).toBeFalsy();
   });
+
+  test('navigate SubjectList test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectTeacherView(initialState)).toBe(TeacherView.schedule);
+    const newTeacherView = TeacherView.subjectList;
+    await teacherStore.asyncDispatch(navigateSubjectList.action());
+    const changedState = teacherStore.getState();
+    expect(selectTeacherView(changedState)).toBe(newTeacherView);
+  });
+
+  test('navigate Schedule test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectTeacherView(initialState)).toBe(TeacherView.schedule);
+    const newTeacherView = TeacherView.subjectList;
+    await teacherStore.asyncDispatch(navigateSubjectList.action());
+    const changedState = teacherStore.getState();
+    expect(selectTeacherView(changedState)).toBe(newTeacherView);
+    await teacherStore.asyncDispatch(navigateSchedule.action());
+    const againChangedState = teacherStore.getState();
+    expect(selectTeacherView(againChangedState)).toBe(TeacherView.schedule);
+  });  
 });
 
