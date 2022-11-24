@@ -5,7 +5,8 @@ import {
   confirmSavingAbonement,
   startEditingRule,
   startEditingSubject,
-  confirmSavingRule
+  confirmSavingRule,
+  confirmSavingSubject
 } from "./domain"
 import{
 changeAbonementLimitLessons,
@@ -14,7 +15,13 @@ changeAbonementType,
 changeRuleDuration,
 changeRulePeriodicityType,
 changeRuleMonthDay,
-changeRuleStartTime
+changeRuleStartTime,
+startChangeSubjectDescription,
+startChangeSubjectName,
+changeSubjectName,
+changeSubjectDescription,
+confirmChangeSubjectName,
+confirmChangeSubjectDescription
   } from "../editable/editable"
 import {
   startCreatingAbonements,
@@ -32,7 +39,11 @@ selectSubjectRules,
 selectRuleDuration,
 selectRulePeriodicityType,
 selectRuleStartTime,
-selectRuleperiodicityRule
+selectRuleperiodicityRule,
+selectTeacherSubjects,
+selectSubjectId,
+selectSubjectDescription,
+selectSubjectName
 } from "../../selectors/editable"
 
 describe('Domain Commands', () => {
@@ -86,5 +97,30 @@ describe('Domain Commands', () => {
     expect(selectRulePeriodicityType(againChangedState)).toEqual(exampleRulePeriodicityType);
     expect(selectRuleperiodicityRule(againChangedState)[0]).toEqual(exampleMonthDay);
     expect(selectRuleStartTime(againChangedState)).toBe(exampleStartTime);
+  });
+  
+  test('start Editing and confirm saving Subject test', async () => {
+    const exampleSubjectDescription = 'best yoga';
+    const exampleSubjectName = 'Tratata Yoga';
+
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectTeacherSubjects(initialState)).toEqual([]);
+    await teacherStore.asyncDispatch(startCreatingSubject.action());
+    await teacherStore.asyncDispatch(startChangeSubjectName.action());
+    await teacherStore.asyncDispatch(changeSubjectName.action(exampleSubjectName));
+    await teacherStore.asyncDispatch(confirmChangeSubjectName.action());
+    await teacherStore.asyncDispatch(startChangeSubjectDescription.action());
+    await teacherStore.asyncDispatch(changeSubjectDescription.action(exampleSubjectDescription));
+    await teacherStore.asyncDispatch(confirmChangeSubjectDescription.action());
+    await teacherStore.asyncDispatch(confirmSavingSubject.action());
+    const changedState = teacherStore.getState();
+    expect(selectTeacherSubjects(changedState).length).toBeGreaterThan(0);
+    const subjectId = selectTeacherSubjects(changedState)[0];
+    await teacherStore.asyncDispatch(startEditingSubject.action(subjectId));
+    const againChangedState = teacherStore.getState();
+    expect(selectSubjectId(againChangedState)).toBe(subjectId);
+    expect(selectSubjectName(againChangedState)).toEqual(exampleSubjectName);
+    expect(selectSubjectDescription(againChangedState)).toEqual(exampleSubjectDescription);
   });
 });
