@@ -50,3 +50,25 @@ export const confirmSavingRule = createCommand<void>(
     yield call(console.log,'confirmSavingRule');
   }
 );
+
+
+export const startEditingSubject = createCommand<id>(
+  'startEditingSubject',
+  function*({payload: subjectId}) {
+    yield call(console.log,'startEditingSubject', subjectId);
+  }
+);
+
+export const startEditingAbonementOffer = createCommand<id>(
+  'startEditingAbonementOffer',
+  function*({payload: abonementId}) {
+    yield call(console.log,'startEditingAbonementOffer', abonementId);
+  }
+);
+
+export const startEditingRule = createCommand<id>(
+  'startEditingRule',
+  function*({payload: ruleId}) {
+    yield call(console.log,'startEditingRule', ruleId);
+  }
+);
