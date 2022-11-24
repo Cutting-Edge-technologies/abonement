@@ -43,9 +43,13 @@ export const selectIsTeacherDescriptionEditing = isTeacherFieldEditingSelectorCr
 export const selectTeacherName: TeacherSelector<string> = (state) => selectTeacherData(state).name;
 export const selectTeacherDescription: TeacherSelector<string> = (state) => selectTeacherData(state).description;
 
+//may need to be moved to domain
 export const selectSubjectId: TeacherSelector<id> = (state) => selectSubjectData(state).id;
 export const selectRuleId: TeacherSelector<id> = (state) => selectRuleData(state).id;
 export const selectAbonementOfferId: TeacherSelector<id> = (state) => selectAbonementOfferData(state).id;
 export const selectSubjectRules: TeacherSelector<id[]> = (state) => selectSubjectData(state).rules;
+export const selectTeacherSubjects: TeacherSelector<id[]> = (state) => selectTeacherData(state).subjects;
+export const selectTeacherAbonementOffers: TeacherSelector<id[]> = (state) => selectTeacherData(state).abonementOffers;
+
 
 
