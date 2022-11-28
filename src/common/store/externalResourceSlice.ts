@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IHaveId } from "../types/domain";
 
-interface IExternalResourceState<ExternalResource> {
+export interface IExternalResourceState<ExternalResource> {
   data: ExternalResource[];
   filters: IExternalResourceFilters;
 }
