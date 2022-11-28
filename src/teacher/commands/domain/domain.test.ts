@@ -205,4 +205,5 @@ describe('Domain Commands', () => {
     console.warn(changedState.loading);
     expect(selectTeacherId(changedState)).toBeTruthy;
   });
+  //finish after creation dummie APIeffects
 });
