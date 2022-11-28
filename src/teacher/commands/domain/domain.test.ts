@@ -203,7 +203,7 @@ describe('Domain Commands', () => {
     await teacherStore.asyncDispatch(startTeacherApp.action());
     const changedState = teacherStore.getState();
     console.warn(changedState.loading);
-    expect(selectTeacherId(changedState)).toBeTruthy;
+    expect(selectTeacherId(changedState)).toBeTruthy();
   });
   //finish after creation dummie APIeffects
 });
