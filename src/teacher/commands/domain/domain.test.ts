@@ -9,7 +9,8 @@ import {
   confirmSavingSubject,
   startDeletingAbonement,
   startDeletingRule,
-  startDeletingSubject
+  startDeletingSubject,
+  startTeacherApp
 } from "./domain"
 import{
 changeAbonementLimitLessons,
@@ -48,6 +49,7 @@ selectSubjectId,
 selectSubjectDescription,
 selectSubjectName
 } from "../../selectors/editable"
+import {selectTeacherId} from "../../selectors/domain"
 
 describe('Domain Commands', () => {
 
@@ -192,5 +194,15 @@ describe('Domain Commands', () => {
     await teacherStore.asyncDispatch(startDeletingSubject.action(subjectId));
     const againChangedState = teacherStore.getState();
     expect(selectTeacherSubjects(againChangedState)).toEqual([]);
+  });
+
+  test('start Teacher App test', async () => {
+    const teacherStore = teacherStoreCreator();
+    const initialState = teacherStore.getState();
+    expect(selectTeacherId(initialState)).toEqual('');
+    await teacherStore.asyncDispatch(startTeacherApp.action());
+    const changedState = teacherStore.getState();
+    console.warn(changedState.loading);
+    expect(selectTeacherId(changedState)).toBeTruthy;
   });
 });
