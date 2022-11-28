@@ -10,3 +10,18 @@ export const HocDecorator = (Story: ComponentStory<any>) => {
     </Provider>
   )
 }
+
+export const createHOCDecorator = () => {
+  const teacherStore = teacherStoreCreator();
+  const HocDecorator = (Story: ComponentStory<any>) => {
+    return (
+      <Provider store={teacherStore}>
+        <Story />
+      </Provider>
+    )
+  };
+
+  return {
+    teacherStore, HocDecorator
+  }
+}

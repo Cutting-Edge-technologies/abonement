@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Action, AnyAction, Dispatch, Reducer, Store } from "redux";
 import { ExtendedStore } from "../types/utility";
 import { commonState } from "./commonReducer";
@@ -63,4 +63,33 @@ export const makeStoreCreator = <State extends commonState>(reducer: Reducer<Sta
   };
 
   return makeANewStore;
+}
+
+export const makeHocTestingStore = <State extends commonState>(store: ExtendedStore<State>) => {
+  const initialState = store.getState();
+  
+  const rootReducer = createReducer(initialState, {
+    setState: (state, { payload }: PayloadAction<State>) => ({...payload}),
+    resetState: () => ({...initialState}),
+  })
+
+  const actionHistory: any[] = [];
+  const sagaMonitor = new StoreSagaMonitor(actionHistory);
+  const sagaMiddleware = makeSagaMiddleware({sagaMonitor});
+
+  const hocStore = configureStore({
+    reducer: rootReducer,
+    middleware: [
+      sagaMiddleware,
+    ],
+    devTools: process.env.NODE_ENV !== 'production',
+  });
+
+  const rootSaga = function*() {
+
+  }
+
+  sagaMiddleware.run(rootSaga);
+
+  return hocStore;
 }
