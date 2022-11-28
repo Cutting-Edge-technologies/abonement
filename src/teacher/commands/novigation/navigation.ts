@@ -64,13 +64,6 @@ export const closeAbonementModal = createCommand<void>(
   }
 );
 
-export const confirmSavingAbonement = createCommand<void>(
-  'confirmSavingAbonement',
-  function*() {
-    yield call(console.log,'confirmSavingAbonement');
-  }
-);
-
 export const subjectShowMore = createCommand<void>(
   'subjectShowMore',
   function*() {
@@ -92,13 +85,6 @@ export const startCreatingRule = createCommand<void>(
   }
 );
 
-export const confirmSavingSubject = createCommand<void>(
-  'confirmSavingSubject',
-  function*() {
-    yield call(console.log,'confirmSavingSubject');
-  }
-);
-
 export const toggleRuleModalMode = createCommand<void>(
   'toggleRuleModalMode',
   function*() {
@@ -110,13 +96,6 @@ export const cancelModifyRule = createCommand<void>(
   'cancelModifyRule',
   function*() {
     yield call(console.log,'cancelModifyRule');
-  }
-);
-
-export const confirmSavingRule = createCommand<void>(
-  'confirmSavingRule',
-  function*() {
-    yield call(console.log,'confirmSavingRule');
   }
 );
 
