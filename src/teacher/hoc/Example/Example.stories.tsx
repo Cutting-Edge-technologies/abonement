@@ -1,6 +1,8 @@
 import { Meta } from "@storybook/react";
 import { ExampleTeacher } from '.';
-import { HocDecorator } from "../TeacherStateDecorator";
+import { createHOCDecorator } from "../TeacherStateDecorator";
+
+const { HocDecorator, teacherStore } = createHOCDecorator();
 
 export default {
   title: "Component/AdditionalInfoPlate",
@@ -11,10 +13,4 @@ export const ExamplePageStory = () => {
   return (
     <ExampleTeacher />
   );
-}
-
-export const ExampleComponentStory = () => {
-  return (
-    <div className="story-content">I am story content</div>
-  )
 }
