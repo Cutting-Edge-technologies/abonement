@@ -14,3 +14,13 @@ export const ExamplePageStory = () => {
     <ExampleTeacher />
   );
 }
+
+export const HocDecoratorStory = () => {
+  return (
+    <>
+      <button onClick={() => console.log(teacherStore.getActionHistoryRepresentation())}>Click me</button>
+      <ExampleTeacher />
+    </>
+    
+  );
+}

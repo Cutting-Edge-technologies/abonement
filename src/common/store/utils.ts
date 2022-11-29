@@ -2,7 +2,7 @@ import { configureStore, createAction, createReducer, createSlice, PayloadAction
 import { Action, AnyAction, Dispatch, Reducer, Store } from "redux";
 import { ExtendedStore } from "../types/utility";
 import { commonState } from "./commonReducer";
-import { StoreSagaMonitor } from "./sagaMonitor";
+import { StoreLogSagaMonitor, StoreSagaMonitor } from "./sagaMonitor";
 import makeSagaMiddleware from 'redux-saga';
 import { rootTeacherState } from "../../teacher/store";
 
@@ -78,7 +78,7 @@ export const makeHocTestingStore = <State extends commonState>(store: ExtendedSt
   })
 
   const actionHistory: any[] = [];
-  const sagaMonitor = new StoreSagaMonitor(actionHistory);
+  const sagaMonitor = new StoreLogSagaMonitor(actionHistory);
   const sagaMiddleware = makeSagaMiddleware({sagaMonitor});
 
   const hocStore = configureStore({
