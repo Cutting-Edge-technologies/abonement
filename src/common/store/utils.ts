@@ -1,5 +1,5 @@
-import { configureStore, createAction, createReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Action, AnyAction, Dispatch, Reducer, Store } from "redux";
+import { configureStore, createAction, createReducer, PayloadAction } from "@reduxjs/toolkit";
+import { Action, Reducer, Store } from "redux";
 import { ExtendedStore } from "../types/utility";
 import { commonState } from "./commonReducer";
 import { StoreLogSagaMonitor, StoreSagaMonitor } from "./sagaMonitor";
