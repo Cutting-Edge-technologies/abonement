@@ -1,9 +1,10 @@
-import { configureStore, createReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { configureStore, createAction, createReducer, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Action, AnyAction, Dispatch, Reducer, Store } from "redux";
 import { ExtendedStore } from "../types/utility";
 import { commonState } from "./commonReducer";
 import { StoreSagaMonitor } from "./sagaMonitor";
 import makeSagaMiddleware from 'redux-saga';
+import { rootTeacherState } from "../../teacher/store";
 
 const tooLongInMs = 3000;
 
@@ -65,11 +66,14 @@ export const makeStoreCreator = <State extends commonState>(reducer: Reducer<Sta
   return makeANewStore;
 }
 
-export const makeHocTestingStore = <State extends commonState>(store: ExtendedStore<State>) => {
+export const setTeacherState = createAction<Partial<rootTeacherState>>('setState');
+export const resetTeacherState = createAction('resetState');
+
+export const makeHocTestingStore = <State extends commonState>(store: ExtendedStore<State>): ExtendedStore<State> => {
   const initialState = store.getState();
   
   const rootReducer = createReducer(initialState, {
-    setState: (state, { payload }: PayloadAction<State>) => ({...payload}),
+    setState: (state, { payload }: PayloadAction<Partial<State>>) => ({...state, ...payload}),
     resetState: () => ({...initialState}),
   })
 
@@ -91,5 +95,10 @@ export const makeHocTestingStore = <State extends commonState>(store: ExtendedSt
 
   sagaMiddleware.run(rootSaga);
 
-  return hocStore;
+  return {
+    ...hocStore,
+    asyncDispatch: (action: Action) => asyncDispatch(store, action),
+    getActionHistory: () => [...actionHistory],
+    getActionHistoryRepresentation: () => JSON.stringify(actionHistory, undefined, 2),
+  };
 }

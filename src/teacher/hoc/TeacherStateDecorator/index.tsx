@@ -1,5 +1,6 @@
 import { ComponentStory } from "@storybook/react";
 import { Provider } from "react-redux";
+import { makeHocTestingStore } from "../../../common/store/utils";
 import { teacherStoreCreator } from "../../store";
 
 export const HocDecorator = (Story: ComponentStory<any>) => {
@@ -12,7 +13,7 @@ export const HocDecorator = (Story: ComponentStory<any>) => {
 }
 
 export const createHOCDecorator = () => {
-  const teacherStore = teacherStoreCreator();
+  const teacherStore = makeHocTestingStore(teacherStoreCreator());
   const HocDecorator = (Story: ComponentStory<any>) => {
     return (
       <Provider store={teacherStore}>
