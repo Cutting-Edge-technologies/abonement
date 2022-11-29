@@ -97,8 +97,10 @@ export const makeHocTestingStore = <State extends commonState>(store: ExtendedSt
 
   return {
     ...hocStore,
-    asyncDispatch: (action: Action) => asyncDispatch(store, action),
+    asyncDispatch: (action: Action) => {throw NotImplementedException()},
     getActionHistory: () => [...actionHistory],
     getActionHistoryRepresentation: () => JSON.stringify(actionHistory, undefined, 2),
   };
 }
+
+const NotImplementedException = () => new Error('Not implemented because no logic is connected.');
