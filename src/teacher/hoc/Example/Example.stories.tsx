@@ -5,7 +5,7 @@ import { createHOCDecorator } from "../TeacherStateDecorator";
 const { HocDecorator, teacherStore } = createHOCDecorator();
 
 export default {
-  title: "Component/AdditionalInfoPlate",
+  title: "Component/Example",
   decorators: [HocDecorator],
 } as Meta;
 
