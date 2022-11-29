@@ -1,3 +1,5 @@
+import styled from "@emotion/styled";
+import { Button } from "@mui/material";
 import { Meta } from "@storybook/react";
 import { ExampleTeacher } from '.';
 import { createHOCDecorator } from "../TeacherStateDecorator";
@@ -18,9 +20,18 @@ export const ExamplePageStory = () => {
 export const HocDecoratorStory = () => {
   return (
     <>
-      <button onClick={() => console.log(teacherStore.getActionHistoryRepresentation())}>Click me</button>
       <ExampleTeacher />
+      <MyStoryButton
+        onClick={() => console.log(teacherStore.getActionHistoryRepresentation())}
+        variant={"contained"}
+        color="error"
+      >
+        Action history
+      </MyStoryButton>
     </>
-    
   );
 }
+
+const MyStoryButton = styled(Button)`
+  margin-top: 40px;
+`;
