@@ -14,8 +14,8 @@ describe('Test Example HOC', () => {
     const messageElement = container.querySelector('.message');
     const countElement = container.querySelector('.count');
 
-    expect(messageElement?.innerHTML).toBe('The message is ');
-    expect(countElement?.innerHTML).toBe('The count is 0');
+    expect(messageElement?.textContent).toBe('The message is ');
+    expect(countElement?.textContent).toBe('The count is 0');
   });
 
   test('it checks that changes in the state are reflected in the components', async () => {
@@ -35,8 +35,8 @@ describe('Test Example HOC', () => {
     const messageElement = container.querySelector('.message');
     const countElement = container.querySelector('.count');
 
-    expect(messageElement?.innerHTML).toBe('The message is Some generic message');
-    expect(countElement?.innerHTML).toBe('The count is 99');
+    expect(messageElement?.textContent).toBe('The message is Some generic message');
+    expect(countElement?.textContent).toBe('The count is 99');
   });
 
   test('it checks that actions are dispatched on buttons click', () => {
