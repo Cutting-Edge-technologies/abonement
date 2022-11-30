@@ -1,9 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { Action, AnyAction, Dispatch, Reducer, Store } from "redux";
+import { configureStore, createAction, createReducer, PayloadAction } from "@reduxjs/toolkit";
+import { Action, Reducer, Store } from "redux";
 import { ExtendedStore } from "../types/utility";
 import { commonState } from "./commonReducer";
-import { StoreSagaMonitor } from "./sagaMonitor";
+import { StoreLogSagaMonitor, StoreSagaMonitor } from "./sagaMonitor";
 import makeSagaMiddleware from 'redux-saga';
+import { rootTeacherState } from "../../teacher/store";
 
 const tooLongInMs = 3000;
 
@@ -64,3 +65,42 @@ export const makeStoreCreator = <State extends commonState>(reducer: Reducer<Sta
 
   return makeANewStore;
 }
+
+export const setTeacherState = createAction<Partial<rootTeacherState>>('setState');
+export const resetTeacherState = createAction('resetState');
+
+export const makeHocTestingStore = <State extends commonState>(store: ExtendedStore<State>): ExtendedStore<State> => {
+  const initialState = store.getState();
+  
+  const rootReducer = createReducer(initialState, {
+    setState: (state, { payload }: PayloadAction<Partial<State>>) => ({...state, ...payload}),
+    resetState: () => ({...initialState}),
+  })
+
+  const actionHistory: any[] = [];
+  const sagaMonitor = new StoreLogSagaMonitor(actionHistory);
+  const sagaMiddleware = makeSagaMiddleware({sagaMonitor});
+
+  const hocStore = configureStore({
+    reducer: rootReducer,
+    middleware: [
+      sagaMiddleware,
+    ],
+    devTools: process.env.NODE_ENV !== 'production',
+  });
+
+  const rootSaga = function*() {
+
+  }
+
+  sagaMiddleware.run(rootSaga);
+
+  return {
+    ...hocStore,
+    asyncDispatch: (action: Action) => {throw NotImplementedException()},
+    getActionHistory: () => [...actionHistory],
+    getActionHistoryRepresentation: () => JSON.stringify(actionHistory, undefined, 2),
+  };
+}
+
+const NotImplementedException = () => new Error('Not implemented because no logic is connected.');
